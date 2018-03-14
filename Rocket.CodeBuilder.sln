@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rocket.CodeBuilder.App", "R
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rocket.CodeBuilder.Template", "Rocket.CodeBuilder.Template\Rocket.CodeBuilder.Template.csproj", "{98379936-4DBB-42DD-9665-1649B790EC02}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleApp", "ConsoleApp\ConsoleApp.csproj", "{D03AC61E-AE8D-4D77-9D94-DFB7C0A66B99}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{98379936-4DBB-42DD-9665-1649B790EC02}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{98379936-4DBB-42DD-9665-1649B790EC02}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{98379936-4DBB-42DD-9665-1649B790EC02}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D03AC61E-AE8D-4D77-9D94-DFB7C0A66B99}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D03AC61E-AE8D-4D77-9D94-DFB7C0A66B99}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D03AC61E-AE8D-4D77-9D94-DFB7C0A66B99}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D03AC61E-AE8D-4D77-9D94-DFB7C0A66B99}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
