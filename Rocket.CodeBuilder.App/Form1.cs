@@ -17,42 +17,39 @@ namespace Rocket.CodeBuilder.App
         {
             InitializeComponent();
         }
-
+        IDataBusiness business = null;
         private void btn_CodeBuilder_Click(object sender, EventArgs e)
         {
-            //server=123.207.96.103;user id=root; password=root_1234; database=jinggongqiangjiang"
-            IDataBusiness business = new MySqlBLL("127.0.0.1", "root", "root", "jinggongqiangjiang");
-
-
-            DataTable dt = business.GetDataTableByName("ERP_Account");
-
-            BuilderCode bc = new BuilderCode(dt)
+            if (string.IsNullOrEmpty(txt_TemplateFilePath.Text))
             {
-                NameSpace = "Incloud"
-            };
+                MessageBox.Show("请选择模板");
+                return;
+            }
 
-            bc.CodeItem.Namespace = bc.NameSpace;
+            if (business == null)
+            {
+                MessageBox.Show("请链接数据库");
+                return;
+            }
 
-            //生成实体模型代码
-            bc.TemplateFilePath = "D:\\Projects\\Template\\Index.tt";
-            bc.OutFileName = string.Format("Index.cshtml");
-            bc.OutFilePath = string.Format(@"D:\\Projects\\Code\\");
-            bc.CreateTemplate();
+            if (string.IsNullOrEmpty(cmb_TableList.SelectedValue.ToString()))
+            {
+                MessageBox.Show("请选择表");
+                return;
+            }
 
-            txt_log.Text = bc.OutContent;
 
-            Console.WriteLine("生成完毕");
-        }
+            string content = File.ReadAllText(txt_TemplateFilePath.Text);
 
-        private void button1_Click(object sender, EventArgs e)
-        {
-            IDataBusiness business = new MySqlBLL("127.0.0.1", "root", "root", "jinggongqiangjiang");
-            #region 备份
-            string name = "Account";
-            string content = File.ReadAllText("D:\\Projects\\Template\\" + name + "\\Index.template");
+            DBTable dt = business.GetTable(cmb_TableList.SelectedValue.ToString());
 
-            DBTable dt = business.GetTable("erp_account");
-            DataColumn[] dataColumnList = business.GetColums("erp_account");
+            dt.ControllerName = txt_ControllerName.Text;
+            dt.GetListUrl = txt_GetListUrlName.Text;
+            dt.AddDataUrl = txt_AddDataUrl.Text;
+            dt.GetDataUrl = txt_GetDataUrl.Text;
+            dt.UpdateData = txt_UpdateDataUrl.Text;
+            dt.DeleteDataUrl = txt_DeleteDataUrlName.Text;
+
 
             string result = "";
             try
@@ -64,25 +61,50 @@ namespace Rocket.CodeBuilder.App
                 result = ex.Message;
             }
 
+            txt_log.Text = result;
+        }
 
-            //var result = Engine.Razor.RunCompile(template, "templateKey1", null, new { Name = "World" });
 
+        private void btn_SelectFileTemplate_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog fileDialog = new OpenFileDialog();
+            fileDialog.Multiselect = false;
+            fileDialog.Title = "请选择文件";
 
-
-            //foreach (DataColumn item in dataColumnList)
-            //{
-            //    dataListCode.AppendFormat("{{ field: '{0}', title: '{0}' }},", item.ColumnName).AppendLine();
-            //}
-
-            //content = content.Replace("@(ControllerName)", name);
-            //content = content.Replace("@(DataListCode)", dataListCode.ToString());
-            if (!Directory.Exists("D:\\Projects\\Template\\" + name + "\\"))
+            //            fileDialog.Filter = "模板文件(*.Template) | *.Template | 所有文件(*.*) | *.*"; //设置要选择的文件的类型
+            if (fileDialog.ShowDialog() == DialogResult.OK)
             {
-                Directory.CreateDirectory("D:\\Projects\\Template\\" + name + "\\");
+                string file = fileDialog.FileName;//返回文件的完整路径
+                txt_TemplateFilePath.Text = file;
             }
-            File.WriteAllText("D:\\Projects\\Template\\" + name + "\\Index.cshtml", result);
-            #endregion
+        }
 
+        private void btn_ConnectionDB_Click(object sender, EventArgs e)
+        {
+            business = new MySqlBLL("121.42.171.176", "root", "root", "pos");
+            string[] tableList = business.GetDataTableNameList("Pos");
+            cmb_TableList.DataSource = tableList;
+        }
+
+        private void txt_ControllerName_TextChanged(object sender, EventArgs e)
+        {
+            txt_GetListUrlName.Text = String.Format("/{0}/GetList", txt_ControllerName.Text);
+            txt_DeleteDataUrlName.Text = String.Format("/{0}/DeleteData", txt_ControllerName.Text);
+            txt_AddDataUrl.Text = String.Format("/{0}/AddData", txt_ControllerName.Text);
+            txt_GetDataUrl.Text = String.Format("/{0}/GetData", txt_ControllerName.Text);
+            txt_UpdateDataUrl.Text = String.Format("/{0}/UpdateData", txt_ControllerName.Text);
+        }
+
+        private void cmb_TableList_SelectedValueChanged(object sender, EventArgs e)
+        {
+            string tableName = cmb_TableList.SelectedValue.ToString();
+
+            char[] tableNameArray = tableName.ToCharArray();
+
+            tableNameArray[0] = tableNameArray[0].ToString().ToUpper().ToCharArray()[0];
+
+            txt_ControllerName.Text = String.Join("", tableNameArray);
+            txt_ControllerName_TextChanged(sender, e);
         }
     }
 }
