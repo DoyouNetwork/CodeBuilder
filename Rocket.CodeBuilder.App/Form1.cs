@@ -2,12 +2,15 @@
 using Rocket.CodeBuilder.Template;
 using System;
 using System.Data;
+using System.Linq;
 using System.Windows.Forms;
 
 using RazorEngine;
 using RazorEngine.Templating;
 using System.IO;
 using Rocket.CodeBuilder.Model;
+using System.Configuration;
+using System.Collections.Generic;
 
 namespace Rocket.CodeBuilder.App
 {
@@ -17,15 +20,40 @@ namespace Rocket.CodeBuilder.App
         {
             InitializeComponent();
         }
+
+        public String GetConfigValue(string key)
+        {
+            string v = ConfigurationManager.AppSettings[key];
+            if (string.IsNullOrEmpty(v))
+            {
+                return "";
+            }
+            else
+            {
+                return v;
+            }
+        }
+
+        public void SaveConfigValue(string key, string value)
+        {
+            Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+
+            if (!config.AppSettings.Settings.AllKeys.Contains(key))
+            {
+                config.AppSettings.Settings.Add(key, value);
+            }
+            else
+            {
+                config.AppSettings.Settings[key].Value = value;
+            }
+
+            config.Save(ConfigurationSaveMode.Modified);
+            ConfigurationManager.RefreshSection("appSettings");
+        }
+
         IDataBusiness business = null;
         private void btn_CodeBuilder_Click(object sender, EventArgs e)
         {
-            if (string.IsNullOrEmpty(txt_TemplateFilePath.Text))
-            {
-                MessageBox.Show("请选择模板");
-                return;
-            }
-
             if (business == null)
             {
                 MessageBox.Show("请链接数据库");
@@ -38,8 +66,15 @@ namespace Rocket.CodeBuilder.App
                 return;
             }
 
+            if (string.IsNullOrEmpty(txt_TemplateFilePath.Text))
+            {
+                MessageBox.Show("请选择模板");
+                return;
+            }
 
-            string content = File.ReadAllText(txt_TemplateFilePath.Text);
+            List<String> templateFileList = new List<string>();
+            string[] files = Directory.GetFiles(txt_TemplateFilePath.Text, "*.Template");
+
 
             DBTable dt = business.GetTable(cmb_TableList.SelectedValue.ToString());
 
@@ -50,39 +85,63 @@ namespace Rocket.CodeBuilder.App
             dt.UpdateData = txt_UpdateDataUrl.Text;
             dt.DeleteDataUrl = txt_DeleteDataUrlName.Text;
 
-
-            string result = "";
-            try
+            string fileOutPath = string.Format("{0}\\{1}\\", txt_FileOutPath.Text, dt.Name);
+            if (!Directory.Exists(fileOutPath))
             {
-                result = Engine.Razor.RunCompile(content, Guid.NewGuid().ToString(), null, dt);
-            }
-            catch (Exception ex)
-            {
-                result = ex.Message;
+                Directory.CreateDirectory(fileOutPath);
             }
 
-            txt_log.Text = result;
+            foreach (var file in files)
+            {
+                string[] fileTempArray = file.Split(new String[] { "\\" }, StringSplitOptions.RemoveEmptyEntries);
+                string fileName = fileTempArray[fileTempArray.Length - 1];
+
+                string content = File.ReadAllText(file);
+                string result = "";
+                try
+                {
+                    result = Engine.Razor.RunCompile(content, Guid.NewGuid().ToString(), null, dt);
+
+                    File.AppendAllText(fileOutPath + fileName, result);
+                }
+                catch (Exception ex)
+                {
+                    result = ex.Message;
+                }
+
+                txt_log.Text += result + "\r\n";
+            }
+
+
         }
 
 
         private void btn_SelectFileTemplate_Click(object sender, EventArgs e)
         {
-            OpenFileDialog fileDialog = new OpenFileDialog();
-            fileDialog.Multiselect = false;
-            fileDialog.Title = "请选择文件";
+            string path = GetConfigValue("TemplatePath");
 
-            //            fileDialog.Filter = "模板文件(*.Template) | *.Template | 所有文件(*.*) | *.*"; //设置要选择的文件的类型
-            if (fileDialog.ShowDialog() == DialogResult.OK)
+            FolderBrowserDialog dialog = new FolderBrowserDialog();
+            if (!string.IsNullOrEmpty(path))
             {
-                string file = fileDialog.FileName;//返回文件的完整路径
-                txt_TemplateFilePath.Text = file;
+                dialog.SelectedPath = path;
+            }
+            dialog.Description = "请选择模板文件路径";
+            if (dialog.ShowDialog() == DialogResult.OK)
+            {
+                string foldPath = dialog.SelectedPath;
+                txt_TemplateFilePath.Text = foldPath;
+                SaveConfigValue("TemplatePath", foldPath);
             }
         }
 
         private void btn_ConnectionDB_Click(object sender, EventArgs e)
         {
-            business = new MySqlBLL("121.42.171.176", "root", "root", "pos");
-            string[] tableList = business.GetDataTableNameList("Pos");
+            business = new MySqlBLL("127.0.0.1", "root", "root");
+
+            cmb_DataBaseList.DataSource = business.GetDatabase();
+            cmb_DataBaseList.SelectedIndex = 0;
+
+            string[] tableList = business.GetDataTableNameList(cmb_DataBaseList.SelectedItem.ToString());
             cmb_TableList.DataSource = tableList;
         }
 
@@ -105,6 +164,37 @@ namespace Rocket.CodeBuilder.App
 
             txt_ControllerName.Text = String.Join("", tableNameArray);
             txt_ControllerName_TextChanged(sender, e);
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            txt_TemplateFilePath.Text = GetConfigValue("TemplatePath");
+
+            txt_FileOutPath.Text = GetConfigValue("FileOutPath");
+        }
+
+        private void btn_FileSavePath_Click(object sender, EventArgs e)
+        {
+            string path = GetConfigValue("FileOutPath");
+
+            FolderBrowserDialog dialog = new FolderBrowserDialog();
+            if (!string.IsNullOrEmpty(path))
+            {
+                dialog.SelectedPath = path;
+            }
+            dialog.Description = "请选择文件输出路径";
+            if (dialog.ShowDialog() == DialogResult.OK)
+            {
+                string foldPath = dialog.SelectedPath;
+                txt_FileOutPath.Text = foldPath;
+                SaveConfigValue("FileOutPath", foldPath);
+            }
+        }
+
+        private void cmb_DataBaseList_SelectedValueChanged(object sender, EventArgs e)
+        {
+            cmb_TableList.DataSource = business.GetDataTableNameList(cmb_DataBaseList.SelectedItem.ToString());
+            cmb_TableList_SelectedValueChanged(sender, e);
         }
     }
 }
