@@ -50,13 +50,20 @@
             this.label8 = new System.Windows.Forms.Label();
             this.txt_FileOutPath = new System.Windows.Forms.TextBox();
             this.btn_FileSavePath = new System.Windows.Forms.Button();
-            this.txt_DataBase = new System.Windows.Forms.TextBox();
             this.cmb_DataBaseList = new System.Windows.Forms.ComboBox();
+            this.label9 = new System.Windows.Forms.Label();
+            this.txt_DatabaseAddress = new System.Windows.Forms.TextBox();
+            this.label10 = new System.Windows.Forms.Label();
+            this.txt_DatabaseUserName = new System.Windows.Forms.TextBox();
+            this.label11 = new System.Windows.Forms.Label();
+            this.txt_DatabasePassword = new System.Windows.Forms.TextBox();
+            this.radioButton1 = new System.Windows.Forms.RadioButton();
+            this.radioButton2 = new System.Windows.Forms.RadioButton();
             this.SuspendLayout();
             // 
             // btn_CodeBuilder
             // 
-            this.btn_CodeBuilder.Location = new System.Drawing.Point(476, 131);
+            this.btn_CodeBuilder.Location = new System.Drawing.Point(480, 165);
             this.btn_CodeBuilder.Name = "btn_CodeBuilder";
             this.btn_CodeBuilder.Size = new System.Drawing.Size(139, 55);
             this.btn_CodeBuilder.TabIndex = 0;
@@ -66,16 +73,16 @@
             // 
             // txt_log
             // 
-            this.txt_log.Location = new System.Drawing.Point(12, 266);
+            this.txt_log.Location = new System.Drawing.Point(12, 235);
             this.txt_log.Multiline = true;
             this.txt_log.Name = "txt_log";
             this.txt_log.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txt_log.Size = new System.Drawing.Size(604, 285);
+            this.txt_log.Size = new System.Drawing.Size(604, 316);
             this.txt_log.TabIndex = 1;
             // 
             // txt_ControllerName
             // 
-            this.txt_ControllerName.Location = new System.Drawing.Point(87, 123);
+            this.txt_ControllerName.Location = new System.Drawing.Point(91, 157);
             this.txt_ControllerName.Margin = new System.Windows.Forms.Padding(2);
             this.txt_ControllerName.Name = "txt_ControllerName";
             this.txt_ControllerName.Size = new System.Drawing.Size(121, 21);
@@ -85,7 +92,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(10, 125);
+            this.label1.Location = new System.Drawing.Point(14, 159);
             this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(65, 12);
@@ -95,7 +102,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(10, 150);
+            this.label2.Location = new System.Drawing.Point(14, 184);
             this.label2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(77, 12);
@@ -104,7 +111,7 @@
             // 
             // txt_GetListUrlName
             // 
-            this.txt_GetListUrlName.Location = new System.Drawing.Point(87, 147);
+            this.txt_GetListUrlName.Location = new System.Drawing.Point(91, 181);
             this.txt_GetListUrlName.Margin = new System.Windows.Forms.Padding(2);
             this.txt_GetListUrlName.Name = "txt_GetListUrlName";
             this.txt_GetListUrlName.Size = new System.Drawing.Size(121, 21);
@@ -113,7 +120,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(217, 177);
+            this.label3.Location = new System.Drawing.Point(221, 211);
             this.label3.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(77, 12);
@@ -122,7 +129,7 @@
             // 
             // txt_DeleteDataUrlName
             // 
-            this.txt_DeleteDataUrlName.Location = new System.Drawing.Point(294, 175);
+            this.txt_DeleteDataUrlName.Location = new System.Drawing.Point(298, 209);
             this.txt_DeleteDataUrlName.Margin = new System.Windows.Forms.Padding(2);
             this.txt_DeleteDataUrlName.Name = "txt_DeleteDataUrlName";
             this.txt_DeleteDataUrlName.Size = new System.Drawing.Size(121, 21);
@@ -130,7 +137,7 @@
             // 
             // btn_SelectFileTemplate
             // 
-            this.btn_SelectFileTemplate.Location = new System.Drawing.Point(241, 69);
+            this.btn_SelectFileTemplate.Location = new System.Drawing.Point(245, 103);
             this.btn_SelectFileTemplate.Name = "btn_SelectFileTemplate";
             this.btn_SelectFileTemplate.Size = new System.Drawing.Size(119, 23);
             this.btn_SelectFileTemplate.TabIndex = 9;
@@ -141,7 +148,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(9, 72);
+            this.label4.Location = new System.Drawing.Point(13, 106);
             this.label4.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(53, 12);
@@ -150,7 +157,7 @@
             // 
             // txt_TemplateFilePath
             // 
-            this.txt_TemplateFilePath.Location = new System.Drawing.Point(66, 69);
+            this.txt_TemplateFilePath.Location = new System.Drawing.Point(70, 103);
             this.txt_TemplateFilePath.Margin = new System.Windows.Forms.Padding(2);
             this.txt_TemplateFilePath.Name = "txt_TemplateFilePath";
             this.txt_TemplateFilePath.Size = new System.Drawing.Size(163, 21);
@@ -158,7 +165,7 @@
             // 
             // btn_ConnectionDB
             // 
-            this.btn_ConnectionDB.Location = new System.Drawing.Point(10, 10);
+            this.btn_ConnectionDB.Location = new System.Drawing.Point(14, 75);
             this.btn_ConnectionDB.Name = "btn_ConnectionDB";
             this.btn_ConnectionDB.Size = new System.Drawing.Size(75, 23);
             this.btn_ConnectionDB.TabIndex = 12;
@@ -169,17 +176,17 @@
             // cmb_TableList
             // 
             this.cmb_TableList.FormattingEnabled = true;
-            this.cmb_TableList.Location = new System.Drawing.Point(409, 10);
+            this.cmb_TableList.Location = new System.Drawing.Point(312, 78);
             this.cmb_TableList.Margin = new System.Windows.Forms.Padding(2);
             this.cmb_TableList.Name = "cmb_TableList";
-            this.cmb_TableList.Size = new System.Drawing.Size(140, 20);
+            this.cmb_TableList.Size = new System.Drawing.Size(249, 20);
             this.cmb_TableList.TabIndex = 13;
             this.cmb_TableList.SelectedValueChanged += new System.EventHandler(this.cmb_TableList_SelectedValueChanged);
             // 
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(10, 175);
+            this.label5.Location = new System.Drawing.Point(14, 209);
             this.label5.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(77, 12);
@@ -188,7 +195,7 @@
             // 
             // txt_AddDataUrl
             // 
-            this.txt_AddDataUrl.Location = new System.Drawing.Point(87, 172);
+            this.txt_AddDataUrl.Location = new System.Drawing.Point(91, 206);
             this.txt_AddDataUrl.Margin = new System.Windows.Forms.Padding(2);
             this.txt_AddDataUrl.Name = "txt_AddDataUrl";
             this.txt_AddDataUrl.Size = new System.Drawing.Size(121, 21);
@@ -197,7 +204,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(217, 127);
+            this.label6.Location = new System.Drawing.Point(221, 161);
             this.label6.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(77, 12);
@@ -206,7 +213,7 @@
             // 
             // txt_GetDataUrl
             // 
-            this.txt_GetDataUrl.Location = new System.Drawing.Point(294, 125);
+            this.txt_GetDataUrl.Location = new System.Drawing.Point(298, 159);
             this.txt_GetDataUrl.Margin = new System.Windows.Forms.Padding(2);
             this.txt_GetDataUrl.Name = "txt_GetDataUrl";
             this.txt_GetDataUrl.Size = new System.Drawing.Size(121, 21);
@@ -215,7 +222,7 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(217, 152);
+            this.label7.Location = new System.Drawing.Point(221, 186);
             this.label7.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(77, 12);
@@ -224,7 +231,7 @@
             // 
             // txt_UpdateDataUrl
             // 
-            this.txt_UpdateDataUrl.Location = new System.Drawing.Point(294, 150);
+            this.txt_UpdateDataUrl.Location = new System.Drawing.Point(298, 184);
             this.txt_UpdateDataUrl.Margin = new System.Windows.Forms.Padding(2);
             this.txt_UpdateDataUrl.Name = "txt_UpdateDataUrl";
             this.txt_UpdateDataUrl.Size = new System.Drawing.Size(121, 21);
@@ -233,7 +240,7 @@
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(9, 101);
+            this.label8.Location = new System.Drawing.Point(13, 135);
             this.label8.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(77, 12);
@@ -242,7 +249,7 @@
             // 
             // txt_FileOutPath
             // 
-            this.txt_FileOutPath.Location = new System.Drawing.Point(90, 98);
+            this.txt_FileOutPath.Location = new System.Drawing.Point(94, 132);
             this.txt_FileOutPath.Margin = new System.Windows.Forms.Padding(2);
             this.txt_FileOutPath.Name = "txt_FileOutPath";
             this.txt_FileOutPath.Size = new System.Drawing.Size(139, 21);
@@ -250,7 +257,7 @@
             // 
             // btn_FileSavePath
             // 
-            this.btn_FileSavePath.Location = new System.Drawing.Point(241, 98);
+            this.btn_FileSavePath.Location = new System.Drawing.Point(245, 132);
             this.btn_FileSavePath.Name = "btn_FileSavePath";
             this.btn_FileSavePath.Size = new System.Drawing.Size(119, 23);
             this.btn_FileSavePath.TabIndex = 20;
@@ -258,31 +265,110 @@
             this.btn_FileSavePath.UseVisualStyleBackColor = true;
             this.btn_FileSavePath.Click += new System.EventHandler(this.btn_FileSavePath_Click);
             // 
-            // txt_DataBase
-            // 
-            this.txt_DataBase.Location = new System.Drawing.Point(90, 9);
-            this.txt_DataBase.Margin = new System.Windows.Forms.Padding(2);
-            this.txt_DataBase.Name = "txt_DataBase";
-            this.txt_DataBase.Size = new System.Drawing.Size(147, 21);
-            this.txt_DataBase.TabIndex = 23;
-            // 
             // cmb_DataBaseList
             // 
             this.cmb_DataBaseList.FormattingEnabled = true;
-            this.cmb_DataBaseList.Location = new System.Drawing.Point(241, 9);
+            this.cmb_DataBaseList.Location = new System.Drawing.Point(94, 78);
             this.cmb_DataBaseList.Margin = new System.Windows.Forms.Padding(2);
             this.cmb_DataBaseList.Name = "cmb_DataBaseList";
-            this.cmb_DataBaseList.Size = new System.Drawing.Size(140, 20);
+            this.cmb_DataBaseList.Size = new System.Drawing.Size(214, 20);
             this.cmb_DataBaseList.TabIndex = 24;
             this.cmb_DataBaseList.SelectedValueChanged += new System.EventHandler(this.cmb_DataBaseList_SelectedValueChanged);
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(13, 14);
+            this.label9.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(71, 12);
+            this.label9.TabIndex = 26;
+            this.label9.Text = "数据库地址:";
+            // 
+            // txt_DatabaseAddress
+            // 
+            this.txt_DatabaseAddress.Location = new System.Drawing.Point(88, 11);
+            this.txt_DatabaseAddress.Margin = new System.Windows.Forms.Padding(2);
+            this.txt_DatabaseAddress.Name = "txt_DatabaseAddress";
+            this.txt_DatabaseAddress.Size = new System.Drawing.Size(163, 21);
+            this.txt_DatabaseAddress.TabIndex = 25;
+            this.txt_DatabaseAddress.Text = "127.0.0.1";
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(254, 14);
+            this.label10.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(47, 12);
+            this.label10.TabIndex = 28;
+            this.label10.Text = "用户名:";
+            // 
+            // txt_DatabaseUserName
+            // 
+            this.txt_DatabaseUserName.Location = new System.Drawing.Point(305, 11);
+            this.txt_DatabaseUserName.Margin = new System.Windows.Forms.Padding(2);
+            this.txt_DatabaseUserName.Name = "txt_DatabaseUserName";
+            this.txt_DatabaseUserName.Size = new System.Drawing.Size(107, 21);
+            this.txt_DatabaseUserName.TabIndex = 27;
+            this.txt_DatabaseUserName.Text = "root";
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(416, 17);
+            this.label11.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(35, 12);
+            this.label11.TabIndex = 30;
+            this.label11.Text = "密码:";
+            // 
+            // txt_DatabasePassword
+            // 
+            this.txt_DatabasePassword.Location = new System.Drawing.Point(455, 11);
+            this.txt_DatabasePassword.Margin = new System.Windows.Forms.Padding(2);
+            this.txt_DatabasePassword.Name = "txt_DatabasePassword";
+            this.txt_DatabasePassword.Size = new System.Drawing.Size(159, 21);
+            this.txt_DatabasePassword.TabIndex = 29;
+            this.txt_DatabasePassword.Text = "root";
+            // 
+            // radioButton1
+            // 
+            this.radioButton1.AutoSize = true;
+            this.radioButton1.Checked = true;
+            this.radioButton1.Location = new System.Drawing.Point(16, 40);
+            this.radioButton1.Name = "radioButton1";
+            this.radioButton1.Size = new System.Drawing.Size(53, 16);
+            this.radioButton1.TabIndex = 31;
+            this.radioButton1.TabStop = true;
+            this.radioButton1.Text = "Mysql";
+            this.radioButton1.UseVisualStyleBackColor = true;
+            // 
+            // radioButton2
+            // 
+            this.radioButton2.AutoSize = true;
+            this.radioButton2.Location = new System.Drawing.Point(75, 40);
+            this.radioButton2.Name = "radioButton2";
+            this.radioButton2.Size = new System.Drawing.Size(77, 16);
+            this.radioButton2.TabIndex = 32;
+            this.radioButton2.TabStop = true;
+            this.radioButton2.Text = "SQLServer";
+            this.radioButton2.UseVisualStyleBackColor = true;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(625, 563);
+            this.Controls.Add(this.radioButton2);
+            this.Controls.Add(this.radioButton1);
+            this.Controls.Add(this.label11);
+            this.Controls.Add(this.txt_DatabasePassword);
+            this.Controls.Add(this.label10);
+            this.Controls.Add(this.txt_DatabaseUserName);
+            this.Controls.Add(this.label9);
+            this.Controls.Add(this.txt_DatabaseAddress);
             this.Controls.Add(this.cmb_DataBaseList);
-            this.Controls.Add(this.txt_DataBase);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.txt_FileOutPath);
             this.Controls.Add(this.btn_FileSavePath);
@@ -337,8 +423,15 @@
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.TextBox txt_FileOutPath;
         private System.Windows.Forms.Button btn_FileSavePath;
-        private System.Windows.Forms.TextBox txt_DataBase;
         private System.Windows.Forms.ComboBox cmb_DataBaseList;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.TextBox txt_DatabaseAddress;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.TextBox txt_DatabaseUserName;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.TextBox txt_DatabasePassword;
+        private System.Windows.Forms.RadioButton radioButton1;
+        private System.Windows.Forms.RadioButton radioButton2;
     }
 }
 

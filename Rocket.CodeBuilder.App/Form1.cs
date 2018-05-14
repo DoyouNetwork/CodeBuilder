@@ -95,14 +95,28 @@ namespace Rocket.CodeBuilder.App
             {
                 string[] fileTempArray = file.Split(new String[] { "\\" }, StringSplitOptions.RemoveEmptyEntries);
                 string fileName = fileTempArray[fileTempArray.Length - 1];
-
+                switch (fileName)
+                {
+                    case "Controller.Template":
+                        fileName = $"{txt_ControllerName.Text}Controller.cs";
+                        break;
+                    case "Model.Template":
+                        fileName = $"{txt_ControllerName.Text}.cs";
+                        break;
+                    case "Edit.Template":
+                        fileName = $"Edit.cshtml";
+                        break;
+                    case "List.Template":
+                        fileName = $"List.cshtml";
+                        break;
+                }
                 string content = File.ReadAllText(file);
                 string result = "";
                 try
                 {
                     result = Engine.Razor.RunCompile(content, Guid.NewGuid().ToString(), null, dt);
 
-                    File.AppendAllText(fileOutPath + fileName, result);
+                    File.WriteAllText(fileOutPath + fileName, result);
                 }
                 catch (Exception ex)
                 {
@@ -136,7 +150,15 @@ namespace Rocket.CodeBuilder.App
 
         private void btn_ConnectionDB_Click(object sender, EventArgs e)
         {
-            business = new MySqlBLL("127.0.0.1", "root", "root");
+            if (radioButton1.Checked)
+            {
+                business = new MySqlBLL(txt_DatabaseAddress.Text, txt_DatabaseUserName.Text, txt_DatabasePassword.Text);
+            }
+            else
+            {
+                //business = new ("111.230.185.209", "root", "root");
+            }
+
 
             cmb_DataBaseList.DataSource = business.GetDatabase();
             cmb_DataBaseList.SelectedIndex = 0;

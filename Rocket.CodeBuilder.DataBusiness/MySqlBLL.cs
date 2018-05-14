@@ -75,7 +75,7 @@ namespace Rocket.CodeBuilder.DataBusiness
 
         public DataTable GetDataTableByName(string tableName)
         {
-            DataTable dt = GetDataTable(string.Format("select * from {0} limit 0", tableName));
+            DataTable dt = GetDataTable(string.Format("select * from `{0}` limit 0", tableName));
             dt.TableName = tableName;
             return dt;
         }
