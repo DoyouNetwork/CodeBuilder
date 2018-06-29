@@ -13,19 +13,22 @@ namespace Rocket.CodeBuilder.Model
         {
             this.Name = dataColumn.ColumnName;
             //dataColumn.DataType.Name
+            //dataColumn.DataType.
         }
 
         public string Name { get; set; }
 
         public string Node { get; set; }
 
-        public DbType DbType { get; set; }
+        //public DbType DbType { get; set; }
 
         public int DbLenght { get; set; }
+
+        public String GetType(string languageType)
+        {
+            return "";
+        }
     }
 
-    public enum DbType
-    {
 
-    }
 }

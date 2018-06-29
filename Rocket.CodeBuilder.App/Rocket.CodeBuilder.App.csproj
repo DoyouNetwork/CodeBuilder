@@ -229,6 +229,7 @@
     <None Include="Template\Controller.Template" />
     <None Include="Template\Edit.Template" />
     <None Include="Template\List.Template" />
+    <None Include="Template\Model.Template" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

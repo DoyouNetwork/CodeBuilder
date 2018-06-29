@@ -42,8 +42,12 @@
   <ItemGroup>
     <Compile Include="DBColumn.cs" />
     <Compile Include="DBDatabase.cs" />
+    <Compile Include="DBDataType.cs" />
     <Compile Include="DBTable.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="DataTypeSettings.json" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -156,7 +156,7 @@ namespace Rocket.CodeBuilder.App
             }
             else
             {
-                //business = new ("111.230.185.209", "root", "root");
+                business = new SqlServerBLL(txt_DatabaseAddress.Text, txt_DatabaseUserName.Text, txt_DatabasePassword.Text);
             }
 
 
@@ -217,6 +217,14 @@ namespace Rocket.CodeBuilder.App
         {
             cmb_TableList.DataSource = business.GetDataTableNameList(cmb_DataBaseList.SelectedItem.ToString());
             cmb_TableList_SelectedValueChanged(sender, e);
+        }
+
+        private void btn_Test_Click(object sender, EventArgs e)
+        {
+            //Dictionary<string, string> dic = new Dictionary<string, string>();
+            //dic.Add("varchar", "String");
+
+            //JsonConvert
         }
     }
 }

@@ -59,6 +59,7 @@
             this.txt_DatabasePassword = new System.Windows.Forms.TextBox();
             this.radioButton1 = new System.Windows.Forms.RadioButton();
             this.radioButton2 = new System.Windows.Forms.RadioButton();
+            this.btn_Test = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // btn_CodeBuilder
@@ -292,7 +293,7 @@
             this.txt_DatabaseAddress.Name = "txt_DatabaseAddress";
             this.txt_DatabaseAddress.Size = new System.Drawing.Size(163, 21);
             this.txt_DatabaseAddress.TabIndex = 25;
-            this.txt_DatabaseAddress.Text = "127.0.0.1";
+            this.txt_DatabaseAddress.Text = "118.24.115.175";
             // 
             // label10
             // 
@@ -311,7 +312,7 @@
             this.txt_DatabaseUserName.Name = "txt_DatabaseUserName";
             this.txt_DatabaseUserName.Size = new System.Drawing.Size(107, 21);
             this.txt_DatabaseUserName.TabIndex = 27;
-            this.txt_DatabaseUserName.Text = "root";
+            this.txt_DatabaseUserName.Text = "sa";
             // 
             // label11
             // 
@@ -330,7 +331,7 @@
             this.txt_DatabasePassword.Name = "txt_DatabasePassword";
             this.txt_DatabasePassword.Size = new System.Drawing.Size(159, 21);
             this.txt_DatabasePassword.TabIndex = 29;
-            this.txt_DatabasePassword.Text = "root";
+            this.txt_DatabasePassword.Text = "sql33136671";
             // 
             // radioButton1
             // 
@@ -355,11 +356,22 @@
             this.radioButton2.Text = "SQLServer";
             this.radioButton2.UseVisualStyleBackColor = true;
             // 
+            // btn_Test
+            // 
+            this.btn_Test.Location = new System.Drawing.Point(480, 104);
+            this.btn_Test.Name = "btn_Test";
+            this.btn_Test.Size = new System.Drawing.Size(139, 55);
+            this.btn_Test.TabIndex = 33;
+            this.btn_Test.Text = "Test";
+            this.btn_Test.UseVisualStyleBackColor = true;
+            this.btn_Test.Click += new System.EventHandler(this.btn_Test_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(625, 563);
+            this.Controls.Add(this.btn_Test);
             this.Controls.Add(this.radioButton2);
             this.Controls.Add(this.radioButton1);
             this.Controls.Add(this.label11);
@@ -432,6 +444,7 @@
         private System.Windows.Forms.TextBox txt_DatabasePassword;
         private System.Windows.Forms.RadioButton radioButton1;
         private System.Windows.Forms.RadioButton radioButton2;
+        private System.Windows.Forms.Button btn_Test;
     }
 }
 

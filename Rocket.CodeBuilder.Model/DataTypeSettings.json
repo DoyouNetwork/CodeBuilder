@@ -1,0 +1,6 @@
+{
+  "C#": {
+    "varchar": "String",
+    "bit": "Bool"
+  }
+}
