@@ -32,6 +32,8 @@ namespace Rocket.SqlHelper
             {
                 connectionString = string.Format("server={0};user id={1}; password={2}; database={3}", source, user, password, database);
             }
+
+            GetConnection();
         }
 
 

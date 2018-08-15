@@ -60,6 +60,8 @@
             this.radioButton1 = new System.Windows.Forms.RadioButton();
             this.radioButton2 = new System.Windows.Forms.RadioButton();
             this.btn_Test = new System.Windows.Forms.Button();
+            this.btn_SelectLanguageFile = new System.Windows.Forms.Button();
+            this.text_LanguageFilePath = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // btn_CodeBuilder
@@ -293,7 +295,7 @@
             this.txt_DatabaseAddress.Name = "txt_DatabaseAddress";
             this.txt_DatabaseAddress.Size = new System.Drawing.Size(163, 21);
             this.txt_DatabaseAddress.TabIndex = 25;
-            this.txt_DatabaseAddress.Text = "118.24.115.175";
+            this.txt_DatabaseAddress.Text = ".";
             // 
             // label10
             // 
@@ -336,18 +338,17 @@
             // radioButton1
             // 
             this.radioButton1.AutoSize = true;
-            this.radioButton1.Checked = true;
             this.radioButton1.Location = new System.Drawing.Point(16, 40);
             this.radioButton1.Name = "radioButton1";
             this.radioButton1.Size = new System.Drawing.Size(53, 16);
             this.radioButton1.TabIndex = 31;
-            this.radioButton1.TabStop = true;
             this.radioButton1.Text = "Mysql";
             this.radioButton1.UseVisualStyleBackColor = true;
             // 
             // radioButton2
             // 
             this.radioButton2.AutoSize = true;
+            this.radioButton2.Checked = true;
             this.radioButton2.Location = new System.Drawing.Point(75, 40);
             this.radioButton2.Name = "radioButton2";
             this.radioButton2.Size = new System.Drawing.Size(77, 16);
@@ -358,19 +359,39 @@
             // 
             // btn_Test
             // 
-            this.btn_Test.Location = new System.Drawing.Point(480, 104);
+            this.btn_Test.Location = new System.Drawing.Point(540, 104);
             this.btn_Test.Name = "btn_Test";
-            this.btn_Test.Size = new System.Drawing.Size(139, 55);
+            this.btn_Test.Size = new System.Drawing.Size(79, 55);
             this.btn_Test.TabIndex = 33;
             this.btn_Test.Text = "Test";
             this.btn_Test.UseVisualStyleBackColor = true;
             this.btn_Test.Click += new System.EventHandler(this.btn_Test_Click);
+            // 
+            // btn_SelectLanguageFile
+            // 
+            this.btn_SelectLanguageFile.Location = new System.Drawing.Point(370, 103);
+            this.btn_SelectLanguageFile.Name = "btn_SelectLanguageFile";
+            this.btn_SelectLanguageFile.Size = new System.Drawing.Size(164, 23);
+            this.btn_SelectLanguageFile.TabIndex = 34;
+            this.btn_SelectLanguageFile.Text = "语言配置文件";
+            this.btn_SelectLanguageFile.UseVisualStyleBackColor = true;
+            this.btn_SelectLanguageFile.Click += new System.EventHandler(this.btn_SelectLanguageFile_Click);
+            // 
+            // text_LanguageFilePath
+            // 
+            this.text_LanguageFilePath.Location = new System.Drawing.Point(370, 132);
+            this.text_LanguageFilePath.Margin = new System.Windows.Forms.Padding(2);
+            this.text_LanguageFilePath.Name = "text_LanguageFilePath";
+            this.text_LanguageFilePath.Size = new System.Drawing.Size(165, 21);
+            this.text_LanguageFilePath.TabIndex = 35;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(625, 563);
+            this.Controls.Add(this.text_LanguageFilePath);
+            this.Controls.Add(this.btn_SelectLanguageFile);
             this.Controls.Add(this.btn_Test);
             this.Controls.Add(this.radioButton2);
             this.Controls.Add(this.radioButton1);
@@ -445,6 +466,8 @@
         private System.Windows.Forms.RadioButton radioButton1;
         private System.Windows.Forms.RadioButton radioButton2;
         private System.Windows.Forms.Button btn_Test;
+        private System.Windows.Forms.Button btn_SelectLanguageFile;
+        private System.Windows.Forms.TextBox text_LanguageFilePath;
     }
 }
 

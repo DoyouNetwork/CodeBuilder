@@ -4,7 +4,7 @@ using System;
 using System.Data;
 using System.Linq;
 using System.Windows.Forms;
-
+using Newtonsoft.Json;
 using RazorEngine;
 using RazorEngine.Templating;
 using System.IO;
@@ -78,6 +78,12 @@ namespace Rocket.CodeBuilder.App
 
             DBTable dt = business.GetTable(cmb_TableList.SelectedValue.ToString());
 
+
+            if (!string.IsNullOrEmpty(text_LanguageFilePath.Text))
+            {
+                dt.Language = JsonConvert.DeserializeObject<List<DBDataType>>(File.ReadAllText(text_LanguageFilePath.Text));
+            }
+
             dt.ControllerName = txt_ControllerName.Text;
             dt.GetListUrl = txt_GetListUrlName.Text;
             dt.AddDataUrl = txt_AddDataUrl.Text;
@@ -150,20 +156,30 @@ namespace Rocket.CodeBuilder.App
 
         private void btn_ConnectionDB_Click(object sender, EventArgs e)
         {
-            if (radioButton1.Checked)
+            try
             {
-                business = new MySqlBLL(txt_DatabaseAddress.Text, txt_DatabaseUserName.Text, txt_DatabasePassword.Text);
+                if (radioButton1.Checked)
+                {
+                    business = new MySqlBLL(txt_DatabaseAddress.Text, txt_DatabaseUserName.Text, txt_DatabasePassword.Text);
+                }
+                else
+                {
+                    business = new SqlServerBLL(txt_DatabaseAddress.Text, txt_DatabaseUserName.Text, txt_DatabasePassword.Text);
+                }
             }
-            else
+            catch (Exception ex)
             {
-                business = new SqlServerBLL(txt_DatabaseAddress.Text, txt_DatabaseUserName.Text, txt_DatabasePassword.Text);
+                MessageBox.Show(ex.Message);
+                return;
             }
+
 
 
             cmb_DataBaseList.DataSource = business.GetDatabase();
             cmb_DataBaseList.SelectedIndex = 0;
 
             string[] tableList = business.GetDataTableNameList(cmb_DataBaseList.SelectedItem.ToString());
+            Array.Sort(tableList);
             cmb_TableList.DataSource = tableList;
         }
 
@@ -193,6 +209,8 @@ namespace Rocket.CodeBuilder.App
             txt_TemplateFilePath.Text = GetConfigValue("TemplatePath");
 
             txt_FileOutPath.Text = GetConfigValue("FileOutPath");
+
+            text_LanguageFilePath.Text = GetConfigValue("LanguageFilePath");
         }
 
         private void btn_FileSavePath_Click(object sender, EventArgs e)
@@ -215,7 +233,9 @@ namespace Rocket.CodeBuilder.App
 
         private void cmb_DataBaseList_SelectedValueChanged(object sender, EventArgs e)
         {
-            cmb_TableList.DataSource = business.GetDataTableNameList(cmb_DataBaseList.SelectedItem.ToString());
+            string[] tableList = business.GetDataTableNameList(cmb_DataBaseList.SelectedItem.ToString());
+            Array.Sort(tableList);
+            cmb_TableList.DataSource = tableList;
             cmb_TableList_SelectedValueChanged(sender, e);
         }
 
@@ -225,6 +245,23 @@ namespace Rocket.CodeBuilder.App
             //dic.Add("varchar", "String");
 
             //JsonConvert
+        }
+
+        private void btn_SelectLanguageFile_Click(object sender, EventArgs e)
+        {
+            string filePath = GetConfigValue("LanguageFilePath");
+
+            OpenFileDialog openFileDialog = new OpenFileDialog()
+            {
+                Filter = "Files (*.json)|*.json"//如果需要筛选txt文件（"Files (*.txt)|*.txt"）
+            };
+            var result = openFileDialog.ShowDialog();
+            if (result == DialogResult.OK)
+            {
+                filePath = openFileDialog.FileName;
+                text_LanguageFilePath.Text = filePath;
+                SaveConfigValue("LanguageFilePath", filePath);
+            }
         }
     }
 }

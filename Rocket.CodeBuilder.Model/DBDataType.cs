@@ -10,10 +10,14 @@ namespace Rocket.CodeBuilder.Model
     {
         public DBDataType()
         {
-            
+            DBType = new Dictionary<string, string>();
         }
         public LanguageType Language { get; set; }
+
+        public Dictionary<String, String> DBType { get; set; }
     }
+
+
 
     public enum LanguageType
     {

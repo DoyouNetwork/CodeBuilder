@@ -18,5 +18,26 @@ namespace Rocket.CodeBuilder.Model
         public string AddDataUrl { get; set; }
         public string UpdateData { get; set; }
         public string DeleteDataUrl { get; set; }
+
+        public List<DBDataType> Language { get; set; }
+
+        public String GetDBType(DBColumn column, LanguageType language)
+        {
+            String typeString = column.DbType;
+            DBDataType type = Language.FirstOrDefault(c => c.Language == language);
+            try
+            {
+                if (type != null && type.DBType.Keys.Contains(column.DbType))
+                {
+                    typeString = type.DBType[column.DbType];
+                }
+            }
+            catch (Exception ex)
+            {
+                typeString = ex.Message;
+            }
+
+            return typeString;
+        }
     }
 }

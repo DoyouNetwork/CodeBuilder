@@ -58,5 +58,11 @@
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Rocket.CodeBuilder.Model\Rocket.CodeBuilder.Model.csproj">
+      <Project>{D839DC00-FDF0-43C6-B072-44CEA427FFF7}</Project>
+      <Name>Rocket.CodeBuilder.Model</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

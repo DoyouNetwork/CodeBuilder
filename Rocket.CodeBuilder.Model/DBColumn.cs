@@ -12,17 +12,22 @@ namespace Rocket.CodeBuilder.Model
         public DBColumn(DataColumn dataColumn)
         {
             this.Name = dataColumn.ColumnName;
-            //dataColumn.DataType.Name
-            //dataColumn.DataType.
+
+            DbType = dataColumn.DataType.Name;
         }
 
-        public string Name { get; set; }
 
-        public string Node { get; set; }
 
-        //public DbType DbType { get; set; }
+        public String Name { get; set; }
+        public bool IsKey { get; set; }
+
+        public String Node { get; set; }
+
+        public String DbType { get; set; }
 
         public int DbLenght { get; set; }
+
+
 
         public String GetType(string languageType)
         {

@@ -8,10 +8,10 @@ namespace Rocket.CodeBuilder.DataBusiness
 {
     public class SqlServerBLL : IDataBusiness
     {
-        ISqlHelper mySql;
+        ISqlHelper sqlServer;
         public SqlServerBLL(string source, string user, string password, string database = "")
         {
-            mySql = new Rocket.SqlHelper.SqlServer(source, user, password, database);
+            sqlServer = new Rocket.SqlHelper.SqlServer(source, user, password, database);
         }
 
         public DataColumn[] GetColums(string tableName)
@@ -32,7 +32,7 @@ namespace Rocket.CodeBuilder.DataBusiness
 
         public string[] GetDatabase()
         {
-            DataTable dt = mySql.ExecuteDataTable("select * from sysdatabases;");
+            DataTable dt = sqlServer.ExecuteDataTable("select * from sysdatabases;");
 
             if (dt == null || dt.Rows.Count <= 0)
             {
@@ -51,12 +51,12 @@ namespace Rocket.CodeBuilder.DataBusiness
 
         public DataTable GetDataTable(string cmd)
         {
-            return mySql.ExecuteDataTable(cmd);
+            return sqlServer.ExecuteDataTable(cmd);
         }
 
         public string[] GetDataTableNameList(string dataBase)
         {
-            DataTable dt = mySql.ExecuteDataTable(string.Format(" use {0}; select * from sysobjects where xtype = 'U';", dataBase));
+            DataTable dt = sqlServer.ExecuteDataTable(string.Format(" use {0}; select * from sysobjects where xtype = 'U';", dataBase));
 
             if (dt == null || dt.Rows.Count <= 0)
             {
