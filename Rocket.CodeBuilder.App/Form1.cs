@@ -101,21 +101,7 @@ namespace Rocket.CodeBuilder.App
             {
                 string[] fileTempArray = file.Split(new String[] { "\\" }, StringSplitOptions.RemoveEmptyEntries);
                 string fileName = fileTempArray[fileTempArray.Length - 1];
-                switch (fileName)
-                {
-                    case "Controller.Template":
-                        fileName = $"{txt_ControllerName.Text}Controller.cs";
-                        break;
-                    case "Model.Template":
-                        fileName = $"{txt_ControllerName.Text}.cs";
-                        break;
-                    case "Edit.Template":
-                        fileName = $"Edit.cshtml";
-                        break;
-                    case "List.Template":
-                        fileName = $"List.cshtml";
-                        break;
-                }
+                fileName = fileName.Replace("Entity", txt_ControllerName.Text);
                 string content = File.ReadAllText(file);
                 string result = "";
                 try
@@ -127,9 +113,10 @@ namespace Rocket.CodeBuilder.App
                 catch (Exception ex)
                 {
                     result = ex.Message;
+                    File.WriteAllText(fileOutPath + fileName, ex.Message);
                 }
 
-                txt_log.Text += result + "\r\n";
+                txt_log.Text = result;
             }
 
 
