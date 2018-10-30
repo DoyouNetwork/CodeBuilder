@@ -1,16 +1,15 @@
-﻿using Rocket.CodeBuilder.DataBusiness;
-using Rocket.CodeBuilder.Template;
-using System;
-using System.Data;
-using System.Linq;
-using System.Windows.Forms;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using RazorEngine;
 using RazorEngine.Templating;
-using System.IO;
+using Rocket.CodeBuilder.DataBusiness;
 using Rocket.CodeBuilder.Model;
-using System.Configuration;
+using System;
 using System.Collections.Generic;
+using System.Configuration;
+using System.Data;
+using System.IO;
+using System.Linq;
+using System.Windows.Forms;
 
 namespace Rocket.CodeBuilder.App
 {
@@ -21,7 +20,7 @@ namespace Rocket.CodeBuilder.App
             InitializeComponent();
         }
 
-        public String GetConfigValue(string key)
+        public string GetConfigValue(string key)
         {
             string v = ConfigurationManager.AppSettings[key];
             if (string.IsNullOrEmpty(v))
@@ -51,7 +50,7 @@ namespace Rocket.CodeBuilder.App
             ConfigurationManager.RefreshSection("appSettings");
         }
 
-        IDataBusiness business = null;
+        private IDataBusiness business = null;
         private void btn_CodeBuilder_Click(object sender, EventArgs e)
         {
             if (business == null)
@@ -72,7 +71,7 @@ namespace Rocket.CodeBuilder.App
                 return;
             }
 
-            List<String> templateFileList = new List<string>();
+            List<string> templateFileList = new List<string>();
             string[] files = Directory.GetFiles(txt_TemplateFilePath.Text, "*.Template");
 
 
@@ -81,7 +80,13 @@ namespace Rocket.CodeBuilder.App
 
             if (!string.IsNullOrEmpty(text_LanguageFilePath.Text))
             {
-                dt.Language = JsonConvert.DeserializeObject<List<DBDataType>>(File.ReadAllText(text_LanguageFilePath.Text));
+                try
+                {
+                    dt.Language = JsonConvert.DeserializeObject<List<DBDataType>>(File.ReadAllText(text_LanguageFilePath.Text));
+                }
+                catch (Exception)
+                {
+                }
             }
 
             dt.ControllerName = txt_ControllerName.Text;
@@ -97,9 +102,9 @@ namespace Rocket.CodeBuilder.App
                 Directory.CreateDirectory(fileOutPath);
             }
 
-            foreach (var file in files)
+            foreach (string file in files)
             {
-                string[] fileTempArray = file.Split(new String[] { "\\" }, StringSplitOptions.RemoveEmptyEntries);
+                string[] fileTempArray = file.Split(new string[] { "\\" }, StringSplitOptions.RemoveEmptyEntries);
                 string fileName = fileTempArray[fileTempArray.Length - 1];
                 fileName = fileName.Replace("Entity", txt_ControllerName.Text);
                 string content = File.ReadAllText(file);
@@ -161,8 +166,8 @@ namespace Rocket.CodeBuilder.App
             }
 
 
-
-            cmb_DataBaseList.DataSource = business.GetDatabase();
+            string[] arr = new string[] { "information_schema", "mysql", "performance_schema", "test" };
+            cmb_DataBaseList.DataSource = business.GetDatabase().Where(c => !arr.Contains(c)).ToArray();
             cmb_DataBaseList.SelectedIndex = 0;
 
             string[] tableList = business.GetDataTableNameList(cmb_DataBaseList.SelectedItem.ToString());
@@ -172,11 +177,11 @@ namespace Rocket.CodeBuilder.App
 
         private void txt_ControllerName_TextChanged(object sender, EventArgs e)
         {
-            txt_GetListUrlName.Text = String.Format("/{0}/GetList", txt_ControllerName.Text);
-            txt_DeleteDataUrlName.Text = String.Format("/{0}/DeleteData", txt_ControllerName.Text);
-            txt_AddDataUrl.Text = String.Format("/{0}/AddData", txt_ControllerName.Text);
-            txt_GetDataUrl.Text = String.Format("/{0}/GetData", txt_ControllerName.Text);
-            txt_UpdateDataUrl.Text = String.Format("/{0}/UpdateData", txt_ControllerName.Text);
+            txt_GetListUrlName.Text = string.Format("/{0}/GetList", txt_ControllerName.Text);
+            txt_DeleteDataUrlName.Text = string.Format("/{0}/DeleteData", txt_ControllerName.Text);
+            txt_AddDataUrl.Text = string.Format("/{0}/AddData", txt_ControllerName.Text);
+            txt_GetDataUrl.Text = string.Format("/{0}/GetData", txt_ControllerName.Text);
+            txt_UpdateDataUrl.Text = string.Format("/{0}/UpdateData", txt_ControllerName.Text);
         }
 
         private void cmb_TableList_SelectedValueChanged(object sender, EventArgs e)
@@ -187,7 +192,7 @@ namespace Rocket.CodeBuilder.App
 
             tableNameArray[0] = tableNameArray[0].ToString().ToUpper().ToCharArray()[0];
 
-            txt_ControllerName.Text = String.Join("", tableNameArray);
+            txt_ControllerName.Text = string.Join("", tableNameArray);
             txt_ControllerName_TextChanged(sender, e);
         }
 
@@ -242,7 +247,7 @@ namespace Rocket.CodeBuilder.App
             {
                 Filter = "Files (*.json)|*.json"//如果需要筛选txt文件（"Files (*.txt)|*.txt"）
             };
-            var result = openFileDialog.ShowDialog();
+            DialogResult result = openFileDialog.ShowDialog();
             if (result == DialogResult.OK)
             {
                 filePath = openFileDialog.FileName;

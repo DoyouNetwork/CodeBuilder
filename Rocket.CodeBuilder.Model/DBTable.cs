@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Rocket.CodeBuilder.Model
 {
@@ -10,6 +8,11 @@ namespace Rocket.CodeBuilder.Model
     {
         public List<DBColumn> ColumnList { get; set; }
         public string Name { get; set; }
+        public string NameLower
+        {
+            get => Name.ToLower();
+            set => NameLower = value;
+        }
 
         public string ControllerName { get; set; }
 
@@ -21,9 +24,9 @@ namespace Rocket.CodeBuilder.Model
 
         public List<DBDataType> Language { get; set; }
 
-        public String GetDBType(DBColumn column, LanguageType language)
+        public string GetDBType(DBColumn column, LanguageType language)
         {
-            String typeString = column.DbType;
+            string typeString = column.DbType;
             DBDataType type = Language.FirstOrDefault(c => c.Language == language);
             try
             {

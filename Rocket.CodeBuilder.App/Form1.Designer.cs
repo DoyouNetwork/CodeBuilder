@@ -295,7 +295,7 @@
             this.txt_DatabaseAddress.Name = "txt_DatabaseAddress";
             this.txt_DatabaseAddress.Size = new System.Drawing.Size(163, 21);
             this.txt_DatabaseAddress.TabIndex = 25;
-            this.txt_DatabaseAddress.Text = ".";
+            this.txt_DatabaseAddress.Text = "127.0.0.1";
             // 
             // label10
             // 
@@ -314,7 +314,7 @@
             this.txt_DatabaseUserName.Name = "txt_DatabaseUserName";
             this.txt_DatabaseUserName.Size = new System.Drawing.Size(107, 21);
             this.txt_DatabaseUserName.TabIndex = 27;
-            this.txt_DatabaseUserName.Text = "sa";
+            this.txt_DatabaseUserName.Text = "root";
             // 
             // label11
             // 
@@ -338,22 +338,22 @@
             // radioButton1
             // 
             this.radioButton1.AutoSize = true;
+            this.radioButton1.Checked = true;
             this.radioButton1.Location = new System.Drawing.Point(16, 40);
             this.radioButton1.Name = "radioButton1";
             this.radioButton1.Size = new System.Drawing.Size(53, 16);
             this.radioButton1.TabIndex = 31;
+            this.radioButton1.TabStop = true;
             this.radioButton1.Text = "Mysql";
             this.radioButton1.UseVisualStyleBackColor = true;
             // 
             // radioButton2
             // 
             this.radioButton2.AutoSize = true;
-            this.radioButton2.Checked = true;
             this.radioButton2.Location = new System.Drawing.Point(75, 40);
             this.radioButton2.Name = "radioButton2";
             this.radioButton2.Size = new System.Drawing.Size(77, 16);
             this.radioButton2.TabIndex = 32;
-            this.radioButton2.TabStop = true;
             this.radioButton2.Text = "SQLServer";
             this.radioButton2.UseVisualStyleBackColor = true;
             // 
