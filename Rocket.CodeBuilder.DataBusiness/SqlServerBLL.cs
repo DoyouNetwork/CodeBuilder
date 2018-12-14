@@ -8,7 +8,7 @@ namespace Rocket.CodeBuilder.DataBusiness
 {
     public class SqlServerBLL : IDataBusiness
     {
-        ISqlHelper sqlServer;
+        private ISqlHelper sqlServer;
         public SqlServerBLL(string source, string user, string password, string database = "")
         {
             sqlServer = new Rocket.SqlHelper.SqlServer(source, user, password, database);
@@ -92,7 +92,7 @@ namespace Rocket.CodeBuilder.DataBusiness
             DataColumn[] dcArray = GetColums(tableName);
 
             dt.ColumnList = new List<DBColumn>();
-            foreach (var dc in dcArray)
+            foreach (DataColumn dc in dcArray)
             {
                 dt.ColumnList.Add(new DBColumn(dc));
             }

@@ -3,15 +3,38 @@ using Rocket.SqlHelper;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Linq;
 
 namespace Rocket.CodeBuilder.DataBusiness
 {
     public class MySqlBLL : IDataBusiness
     {
-        ISqlHelper mySql;
+        private ISqlHelper mySql;
         public MySqlBLL(string source, string user, string password, string database = "")
         {
             mySql = new Rocket.SqlHelper.MySql(source, user, password, database);
+        }
+
+        public ColumnDesc[] GetColumnDesc(string tableName)
+        {
+            List<ColumnDesc> td = new List<ColumnDesc>();
+            DataTable tableDesc = mySql.ExecuteDataTable($"show full fields from {tableName}");
+
+            foreach (DataRow item in tableDesc.Rows)
+            {
+                ColumnDesc columnDesc = new ColumnDesc()
+                {
+                    Comment = item["Comment"].ToString(),
+                    Field = item["Field"].ToString(),
+                    Key = item["Key"].ToString().ToLower() == "pri",
+                    Null = item["Null"].ToString().ToLower() == "yes"
+                };
+                columnDesc.SetType(item["Type"].ToString());
+
+                td.Add(columnDesc);
+            }
+
+            return td.ToArray();
         }
 
         public DataColumn[] GetColums(string tableName)
@@ -30,6 +53,9 @@ namespace Rocket.CodeBuilder.DataBusiness
             return null;
         }
 
+        /// <summary>
+        /// 取得所有的数据库
+        /// </summary>
         public string[] GetDatabase()
         {
             DataTable dt = mySql.ExecuteDataTable("show databases;");
@@ -49,11 +75,18 @@ namespace Rocket.CodeBuilder.DataBusiness
             }
         }
 
+
+        /// <summary>
+        /// 执行SQL语句,查询数据表
+        /// </summary>
         public DataTable GetDataTable(string cmd)
         {
             return mySql.ExecuteDataTable(cmd);
         }
 
+        /// <summary>
+        /// 取得数据库的所有表
+        /// </summary>
         public string[] GetDataTableNameList(string dataBase)
         {
             DataTable dt = mySql.ExecuteDataTable(string.Format("use {0}; show TABLES;", dataBase));
@@ -73,6 +106,10 @@ namespace Rocket.CodeBuilder.DataBusiness
             }
         }
 
+        /// <summary>
+        /// 获取空的数据表
+        /// </summary>
+        /// <param name="tableName">表名</param>
         public DataTable GetDataTableByName(string tableName)
         {
             DataTable dt = GetDataTable(string.Format("select * from `{0}` limit 0", tableName));
@@ -80,21 +117,35 @@ namespace Rocket.CodeBuilder.DataBusiness
             return dt;
         }
 
+        /// <summary>
+        /// 取得指定表的所有列
+        /// </summary>
         public DBColumn GetColumn(string columnName)
         {
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// 获取数据库表对象实体
+        /// </summary>
         public DBTable GetTable(string tableName)
         {
             DBTable dt = new DBTable() { Name = tableName };
 
             DataColumn[] dcArray = GetColums(tableName);
-
+            ColumnDesc[] tableDesc = GetColumnDesc(tableName);
             dt.ColumnList = new List<DBColumn>();
-            foreach (var dc in dcArray)
+            foreach (DataColumn dc in dcArray)
             {
-                dt.ColumnList.Add(new DBColumn(dc));
+                ColumnDesc cd = tableDesc.FirstOrDefault(c => c.Field == dc.Caption);
+                if (cd != null)
+                {
+                    dt.ColumnList.Add(new DBColumn(cd));
+                }
+                else
+                {
+                    dt.ColumnList.Add(new DBColumn(dc));
+                }
             }
 
             return dt;

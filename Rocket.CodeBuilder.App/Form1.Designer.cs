@@ -57,8 +57,8 @@
             this.txt_DatabaseUserName = new System.Windows.Forms.TextBox();
             this.label11 = new System.Windows.Forms.Label();
             this.txt_DatabasePassword = new System.Windows.Forms.TextBox();
-            this.radioButton1 = new System.Windows.Forms.RadioButton();
-            this.radioButton2 = new System.Windows.Forms.RadioButton();
+            this.rbtn_DBType_MySql = new System.Windows.Forms.RadioButton();
+            this.rbtn_DBType_SqlServer = new System.Windows.Forms.RadioButton();
             this.btn_Test = new System.Windows.Forms.Button();
             this.btn_SelectLanguageFile = new System.Windows.Forms.Button();
             this.text_LanguageFilePath = new System.Windows.Forms.TextBox();
@@ -295,7 +295,7 @@
             this.txt_DatabaseAddress.Name = "txt_DatabaseAddress";
             this.txt_DatabaseAddress.Size = new System.Drawing.Size(163, 21);
             this.txt_DatabaseAddress.TabIndex = 25;
-            this.txt_DatabaseAddress.Text = "127.0.0.1";
+            this.txt_DatabaseAddress.Text = "118.190.156.228";
             // 
             // label10
             // 
@@ -333,29 +333,29 @@
             this.txt_DatabasePassword.Name = "txt_DatabasePassword";
             this.txt_DatabasePassword.Size = new System.Drawing.Size(159, 21);
             this.txt_DatabasePassword.TabIndex = 29;
-            this.txt_DatabasePassword.Text = "sql33136671";
+            this.txt_DatabasePassword.Text = "Sql33136671";
             // 
-            // radioButton1
+            // rbtn_DBType_MySql
             // 
-            this.radioButton1.AutoSize = true;
-            this.radioButton1.Checked = true;
-            this.radioButton1.Location = new System.Drawing.Point(16, 40);
-            this.radioButton1.Name = "radioButton1";
-            this.radioButton1.Size = new System.Drawing.Size(53, 16);
-            this.radioButton1.TabIndex = 31;
-            this.radioButton1.TabStop = true;
-            this.radioButton1.Text = "Mysql";
-            this.radioButton1.UseVisualStyleBackColor = true;
+            this.rbtn_DBType_MySql.AutoSize = true;
+            this.rbtn_DBType_MySql.Checked = true;
+            this.rbtn_DBType_MySql.Location = new System.Drawing.Point(16, 40);
+            this.rbtn_DBType_MySql.Name = "rbtn_DBType_MySql";
+            this.rbtn_DBType_MySql.Size = new System.Drawing.Size(53, 16);
+            this.rbtn_DBType_MySql.TabIndex = 31;
+            this.rbtn_DBType_MySql.TabStop = true;
+            this.rbtn_DBType_MySql.Text = "Mysql";
+            this.rbtn_DBType_MySql.UseVisualStyleBackColor = true;
             // 
-            // radioButton2
+            // rbtn_DBType_SqlServer
             // 
-            this.radioButton2.AutoSize = true;
-            this.radioButton2.Location = new System.Drawing.Point(75, 40);
-            this.radioButton2.Name = "radioButton2";
-            this.radioButton2.Size = new System.Drawing.Size(77, 16);
-            this.radioButton2.TabIndex = 32;
-            this.radioButton2.Text = "SQLServer";
-            this.radioButton2.UseVisualStyleBackColor = true;
+            this.rbtn_DBType_SqlServer.AutoSize = true;
+            this.rbtn_DBType_SqlServer.Location = new System.Drawing.Point(75, 40);
+            this.rbtn_DBType_SqlServer.Name = "rbtn_DBType_SqlServer";
+            this.rbtn_DBType_SqlServer.Size = new System.Drawing.Size(77, 16);
+            this.rbtn_DBType_SqlServer.TabIndex = 32;
+            this.rbtn_DBType_SqlServer.Text = "SQLServer";
+            this.rbtn_DBType_SqlServer.UseVisualStyleBackColor = true;
             // 
             // btn_Test
             // 
@@ -393,8 +393,8 @@
             this.Controls.Add(this.text_LanguageFilePath);
             this.Controls.Add(this.btn_SelectLanguageFile);
             this.Controls.Add(this.btn_Test);
-            this.Controls.Add(this.radioButton2);
-            this.Controls.Add(this.radioButton1);
+            this.Controls.Add(this.rbtn_DBType_SqlServer);
+            this.Controls.Add(this.rbtn_DBType_MySql);
             this.Controls.Add(this.label11);
             this.Controls.Add(this.txt_DatabasePassword);
             this.Controls.Add(this.label10);
@@ -463,8 +463,8 @@
         private System.Windows.Forms.TextBox txt_DatabaseUserName;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.TextBox txt_DatabasePassword;
-        private System.Windows.Forms.RadioButton radioButton1;
-        private System.Windows.Forms.RadioButton radioButton2;
+        private System.Windows.Forms.RadioButton rbtn_DBType_MySql;
+        private System.Windows.Forms.RadioButton rbtn_DBType_SqlServer;
         private System.Windows.Forms.Button btn_Test;
         private System.Windows.Forms.Button btn_SelectLanguageFile;
         private System.Windows.Forms.TextBox text_LanguageFilePath;

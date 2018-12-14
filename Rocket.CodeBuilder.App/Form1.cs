@@ -6,7 +6,6 @@ using Rocket.CodeBuilder.Model;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
-using System.Data;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
@@ -51,6 +50,10 @@ namespace Rocket.CodeBuilder.App
         }
 
         private IDataBusiness business = null;
+
+        /// <summary>
+        /// 生成代码
+        /// </summary>
         private void btn_CodeBuilder_Click(object sender, EventArgs e)
         {
             if (business == null)
@@ -82,7 +85,7 @@ namespace Rocket.CodeBuilder.App
             {
                 try
                 {
-                    dt.Language = JsonConvert.DeserializeObject<List<DBDataType>>(File.ReadAllText(text_LanguageFilePath.Text));
+                    dt.AddLanguage(JsonConvert.DeserializeObject<List<DBDataType>>(File.ReadAllText(text_LanguageFilePath.Text)));
                 }
                 catch (Exception)
                 {
@@ -106,7 +109,23 @@ namespace Rocket.CodeBuilder.App
             {
                 string[] fileTempArray = file.Split(new string[] { "\\" }, StringSplitOptions.RemoveEmptyEntries);
                 string fileName = fileTempArray[fileTempArray.Length - 1];
+
+                switch (fileName)
+                {
+                    case "EntityService.Template":
+                    case "IEntityService.Template":
+                    case "EntityController.Template":
+                    case "Entity.Template":
+                        fileName = fileName.Replace("Template", "cs");
+                        break;
+
+                    case "Index.Template":
+                        fileName = fileName.Replace("Template", "cshtml");
+                        break;
+                }
+
                 fileName = fileName.Replace("Entity", txt_ControllerName.Text);
+
                 string content = File.ReadAllText(file);
                 string result = "";
                 try
@@ -128,6 +147,9 @@ namespace Rocket.CodeBuilder.App
         }
 
 
+        /// <summary>
+        /// 设置模板文件路径
+        /// </summary>
         private void btn_SelectFileTemplate_Click(object sender, EventArgs e)
         {
             string path = GetConfigValue("TemplatePath");
@@ -146,11 +168,15 @@ namespace Rocket.CodeBuilder.App
             }
         }
 
+
+        /// <summary>
+        /// Db Connection
+        /// </summary>
         private void btn_ConnectionDB_Click(object sender, EventArgs e)
         {
             try
             {
-                if (radioButton1.Checked)
+                if (rbtn_DBType_MySql.Checked)
                 {
                     business = new MySqlBLL(txt_DatabaseAddress.Text, txt_DatabaseUserName.Text, txt_DatabasePassword.Text);
                 }
@@ -168,13 +194,18 @@ namespace Rocket.CodeBuilder.App
 
             string[] arr = new string[] { "information_schema", "mysql", "performance_schema", "test" };
             cmb_DataBaseList.DataSource = business.GetDatabase().Where(c => !arr.Contains(c)).ToArray();
+            cmb_DataBaseList.DataSource = new string[] { "Rocket" };
             cmb_DataBaseList.SelectedIndex = 0;
 
             string[] tableList = business.GetDataTableNameList(cmb_DataBaseList.SelectedItem.ToString());
             Array.Sort(tableList);
             cmb_TableList.DataSource = tableList;
+            cmb_TableList.DataSource = new string[] { "Ad" };
         }
 
+        /// <summary>
+        /// 修改控制器名称
+        /// </summary>
         private void txt_ControllerName_TextChanged(object sender, EventArgs e)
         {
             txt_GetListUrlName.Text = string.Format("/{0}/GetList", txt_ControllerName.Text);
@@ -184,6 +215,9 @@ namespace Rocket.CodeBuilder.App
             txt_UpdateDataUrl.Text = string.Format("/{0}/UpdateData", txt_ControllerName.Text);
         }
 
+        /// <summary>
+        /// 改变表选择
+        /// </summary>
         private void cmb_TableList_SelectedValueChanged(object sender, EventArgs e)
         {
             string tableName = cmb_TableList.SelectedValue.ToString();
@@ -196,6 +230,9 @@ namespace Rocket.CodeBuilder.App
             txt_ControllerName_TextChanged(sender, e);
         }
 
+        /// <summary>
+        /// 窗体载入
+        /// </summary>
         private void Form1_Load(object sender, EventArgs e)
         {
             txt_TemplateFilePath.Text = GetConfigValue("TemplatePath");
@@ -205,6 +242,9 @@ namespace Rocket.CodeBuilder.App
             text_LanguageFilePath.Text = GetConfigValue("LanguageFilePath");
         }
 
+        /// <summary>
+        /// 设置代码文件输出路径
+        /// </summary>
         private void btn_FileSavePath_Click(object sender, EventArgs e)
         {
             string path = GetConfigValue("FileOutPath");
@@ -223,6 +263,9 @@ namespace Rocket.CodeBuilder.App
             }
         }
 
+        /// <summary>
+        /// 选择数据库改变,查出所有表
+        /// </summary>
         private void cmb_DataBaseList_SelectedValueChanged(object sender, EventArgs e)
         {
             string[] tableList = business.GetDataTableNameList(cmb_DataBaseList.SelectedItem.ToString());
@@ -231,14 +274,30 @@ namespace Rocket.CodeBuilder.App
             cmb_TableList_SelectedValueChanged(sender, e);
         }
 
+        /// <summary>
+        /// 测试按钮
+        /// </summary>
         private void btn_Test_Click(object sender, EventArgs e)
         {
-            //Dictionary<string, string> dic = new Dictionary<string, string>();
-            //dic.Add("varchar", "String");
+            DBDataType dBDataType = new DBDataType
+            {
+                Language = LanguageType.CSharp
+            };
+            dBDataType.DBType.Add("varchar", "String");
+            dBDataType.DBType.Add("int", "int");
 
-            //JsonConvert
+
+            List<DBDataType> dataList = new List<DBDataType>
+            {
+                dBDataType
+            };
+            string json = JsonConvert.SerializeObject(dataList);
+
         }
 
+        /// <summary>
+        /// 查询配置文件
+        /// </summary>
         private void btn_SelectLanguageFile_Click(object sender, EventArgs e)
         {
             string filePath = GetConfigValue("LanguageFilePath");

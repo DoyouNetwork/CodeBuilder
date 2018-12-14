@@ -1,0 +1,164 @@
+﻿@{
+    List<string> dateTimeList=new List<string>();
+}
+
+@@{
+    ViewData["Title"] = "@(Model.Name)";
+    Layout = "~/Views/Shared/_AdminDataLayoutLayui.cshtml";
+}
+
+<script type="text/html" id="toolbarData">
+    <div class="layui-btn-container">
+        <button class="layui-btn layui-btn-sm" lay-event="addData">添加</button>
+    </div>
+</script>
+<script type="text/html" id="roleBar">
+    <a class="layui-btn layui-btn-xs" lay-event="updateDataPermission">编辑@(Model.Name)</a>
+    <a class="layui-btn layui-btn-xs" lay-event="deleteData">删除@(Model.Name)</a>
+</script>
+<table class="layui-hide" id="roleList" lay-filter="role"></table>
+
+@@section Script{
+    <script>
+        layui.use(['form', 'table'], function () {
+            var form = layui.form;
+            var table = layui.table;
+            var form = layui.form;
+            var addDataId;
+
+            table.render({
+                id: 'roleTable'
+                , elem: '#roleList'
+                , toolbar: '#toolbarData'
+                , method: 'post'
+                , url: '/@(Model.Name)/GetDataList'
+                , cols: [[
+				@foreach(var d in Model.ColumnList){
+WriteLiteral("{ field:'"+@d.Name+"',title:'"+@d.Name+"名称' },\r\n");
+}
+                    { title: '操作', toolbar: '#roleBar' }
+                ]]
+            });
+
+            //以复选框事件为例
+            table.on('toolbar(role)', function (obj) {
+                console.log(obj);
+                switch (obj.event) {
+                    case 'addData':
+                        addDataId = layer.open({
+                            type: 1,
+                            content: $('#addDataBox')
+                        });
+                        break;
+                    default:
+                        layer.msg('未定义事件:' + obj.event);
+                        break;
+                };
+            });
+
+            //以复选框事件为例
+            table.on('tool(role)', function (obj) {
+                console.log(obj);
+                switch (obj.event) {
+                    case 'updateDataPermission':
+                        layer.open({
+                            title: '编辑@(Model.Name)',
+                            type: 2,
+                            area: ['550px', '430px'],
+                            content: '/@(Model.Name)/DataPermission?DataId=' + obj.data.Id
+                        });
+                        break;
+
+                    case 'deleteData':
+                        layer.confirm('确定要删除@(Model.Name)么?', { icon: 3, title: '提示' }, function (index) {
+                            console.log(obj.data.Id);
+                            //return;
+                            layer.close(index);
+
+                            var loadingDeleteData = layer.load(1, { shade: [0.8, '#666'] });
+
+                            $.ajax({
+                                type: 'POST',
+                                url: '/@(Model.Name)/DeleteData',
+                                data: { Id: obj.data.Id },
+                                dataType: "json",
+                                success: function (d) {
+                                    layer.close(loadingDeleteData);
+                                    layer.msg(d.msg);
+                                    if (true) {
+                                        table.reload('roleTable', {});
+                                    }
+                                }
+                            });
+                        });
+                        break;
+
+                    default:
+                        layer.msg('未定义事件:' + obj.event);
+                        break;
+                };
+            });
+
+
+
+
+            //监听提交
+            form.on('submit(addDataSubmit)', function (data) {
+                var loading = layer.load(1, { shade: [0.8, '#666'] })
+                $.ajax({
+                    type: 'POST',
+                    url: '/@(Model.Name)/AddData',
+                    data: { name: data.field.roleName },
+                    dataType: "json",
+                    success: function (d) {
+                        layer.close(loading);
+                        layer.close(addDataId);
+                        layer.msg(d.msg);
+
+                        if (d.msg == "添加成功") {
+                            table.reload('roleTable', {});
+                        }
+                    }
+                });
+
+                return false;
+            });
+        });
+    </script>
+}
+
+
+@@section DomBox{
+    <div class="layui-form" id="addDataBox" style="margin-top:10px;">
+                    
+                    @foreach(var d in Model.ColumnList){
+                        if (d.IsKey) {
+                            continue;
+                        }
+<div class="layui-form-item">
+<label class="layui-form-label">@d.Name</label>
+<div class="layui-input-inline">
+
+@switch (d.GetType()) {
+    case "DateTime":
+<input type='text' name='EndTime' id='EndTime' placeholder='HH:mm:ss' class='layui-input'>        
+        break;
+
+    default:
+    <input type="text" name="@d.Name" placeholder="请输入@(d.Name)名" autocomplete="off" class="layui-input">
+        break;
+}
+WriteLiteral(d.GetType());
+</div>
+</div>
+WriteLiteral("\r\n\r\n");
+}
+        
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button type="reset" class="layui-btn layui-btn-primary">关闭</button>
+                <button class="layui-btn" lay-submit lay-filter="addDataSubmit">立即提交</button>
+            </div>
+        </div>
+    </div>
+}
