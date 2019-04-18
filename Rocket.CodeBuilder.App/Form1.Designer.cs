@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.btn_CodeBuilder = new System.Windows.Forms.Button();
             this.txt_log = new System.Windows.Forms.TextBox();
             this.txt_ControllerName = new System.Windows.Forms.TextBox();
@@ -62,6 +63,13 @@
             this.btn_Test = new System.Windows.Forms.Button();
             this.btn_SelectLanguageFile = new System.Windows.Forms.Button();
             this.text_LanguageFilePath = new System.Windows.Forms.TextBox();
+            this.btn_WriteSettings = new System.Windows.Forms.Button();
+            this.dgv_Columns = new System.Windows.Forms.DataGridView();
+            this.DisplayName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Node = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.DbType = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.WriteType = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            ((System.ComponentModel.ISupportInitialize)(this.dgv_Columns)).BeginInit();
             this.SuspendLayout();
             // 
             // btn_CodeBuilder
@@ -182,7 +190,7 @@
             this.cmb_TableList.Location = new System.Drawing.Point(312, 78);
             this.cmb_TableList.Margin = new System.Windows.Forms.Padding(2);
             this.cmb_TableList.Name = "cmb_TableList";
-            this.cmb_TableList.Size = new System.Drawing.Size(249, 20);
+            this.cmb_TableList.Size = new System.Drawing.Size(192, 20);
             this.cmb_TableList.TabIndex = 13;
             this.cmb_TableList.SelectedValueChanged += new System.EventHandler(this.cmb_TableList_SelectedValueChanged);
             // 
@@ -295,7 +303,7 @@
             this.txt_DatabaseAddress.Name = "txt_DatabaseAddress";
             this.txt_DatabaseAddress.Size = new System.Drawing.Size(163, 21);
             this.txt_DatabaseAddress.TabIndex = 25;
-            this.txt_DatabaseAddress.Text = "118.190.156.228";
+            this.txt_DatabaseAddress.Text = "yuanfen0536.com";
             // 
             // label10
             // 
@@ -385,11 +393,62 @@
             this.text_LanguageFilePath.Size = new System.Drawing.Size(165, 21);
             this.text_LanguageFilePath.TabIndex = 35;
             // 
+            // btn_WriteSettings
+            // 
+            this.btn_WriteSettings.Location = new System.Drawing.Point(509, 75);
+            this.btn_WriteSettings.Name = "btn_WriteSettings";
+            this.btn_WriteSettings.Size = new System.Drawing.Size(107, 23);
+            this.btn_WriteSettings.TabIndex = 36;
+            this.btn_WriteSettings.Text = "输出设置";
+            this.btn_WriteSettings.UseVisualStyleBackColor = true;
+            // 
+            // dgv_Columns
+            // 
+            this.dgv_Columns.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgv_Columns.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.DisplayName,
+            this.Node,
+            this.DbType,
+            this.WriteType});
+            this.dgv_Columns.Location = new System.Drawing.Point(625, 11);
+            this.dgv_Columns.Name = "dgv_Columns";
+            this.dgv_Columns.RowTemplate.Height = 23;
+            this.dgv_Columns.Size = new System.Drawing.Size(544, 540);
+            this.dgv_Columns.TabIndex = 37;
+            // 
+            // DisplayName
+            // 
+            this.DisplayName.DataPropertyName = "Name";
+            this.DisplayName.HeaderText = "名称";
+            this.DisplayName.Name = "DisplayName";
+            // 
+            // Node
+            // 
+            this.Node.DataPropertyName = "Node";
+            this.Node.HeaderText = "中文名称";
+            this.Node.Name = "Node";
+            // 
+            // DbType
+            // 
+            this.DbType.DataPropertyName = "DbType";
+            this.DbType.HeaderText = "数据库类型";
+            this.DbType.Name = "DbType";
+            this.DbType.ReadOnly = true;
+            // 
+            // WriteType
+            // 
+            this.WriteType.DataPropertyName = "WriteType";
+            this.WriteType.HeaderText = "输出类型";
+            this.WriteType.Name = "WriteType";
+            this.WriteType.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(625, 563);
+            this.ClientSize = new System.Drawing.Size(1181, 561);
+            this.Controls.Add(this.dgv_Columns);
+            this.Controls.Add(this.btn_WriteSettings);
             this.Controls.Add(this.text_LanguageFilePath);
             this.Controls.Add(this.btn_SelectLanguageFile);
             this.Controls.Add(this.btn_Test);
@@ -424,9 +483,11 @@
             this.Controls.Add(this.txt_ControllerName);
             this.Controls.Add(this.txt_log);
             this.Controls.Add(this.btn_CodeBuilder);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Form1";
-            this.Text = "Form1";
+            this.Text = "火箭代码生成器";
             this.Load += new System.EventHandler(this.Form1_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.dgv_Columns)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -468,6 +529,12 @@
         private System.Windows.Forms.Button btn_Test;
         private System.Windows.Forms.Button btn_SelectLanguageFile;
         private System.Windows.Forms.TextBox text_LanguageFilePath;
+        private System.Windows.Forms.Button btn_WriteSettings;
+        private System.Windows.Forms.DataGridView dgv_Columns;
+        private System.Windows.Forms.DataGridViewTextBoxColumn DisplayName;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Node;
+        private System.Windows.Forms.DataGridViewTextBoxColumn DbType;
+        private System.Windows.Forms.DataGridViewTextBoxColumn WriteType;
     }
 }
 

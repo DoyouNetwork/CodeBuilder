@@ -18,7 +18,7 @@ namespace Rocket.CodeBuilder.DataBusiness
         public ColumnDesc[] GetColumnDesc(string tableName)
         {
             List<ColumnDesc> td = new List<ColumnDesc>();
-            DataTable tableDesc = mySql.ExecuteDataTable($"show full fields from {tableName}");
+            DataTable tableDesc = mySql.ExecuteDataTable($"show full fields from `{tableName}`");
 
             foreach (DataRow item in tableDesc.Rows)
             {

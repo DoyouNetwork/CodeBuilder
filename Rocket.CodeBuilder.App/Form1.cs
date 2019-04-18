@@ -17,6 +17,7 @@ namespace Rocket.CodeBuilder.App
         public Form1()
         {
             InitializeComponent();
+            dgv_Columns.AutoGenerateColumns = false;
         }
 
         public string GetConfigValue(string key)
@@ -50,6 +51,7 @@ namespace Rocket.CodeBuilder.App
         }
 
         private IDataBusiness business = null;
+        DBTable dt = null;
 
         /// <summary>
         /// 生成代码
@@ -77,10 +79,7 @@ namespace Rocket.CodeBuilder.App
             List<string> templateFileList = new List<string>();
             string[] files = Directory.GetFiles(txt_TemplateFilePath.Text, "*.Template");
 
-
-            DBTable dt = business.GetTable(cmb_TableList.SelectedValue.ToString());
-
-
+            
             if (!string.IsNullOrEmpty(text_LanguageFilePath.Text))
             {
                 try
@@ -142,8 +141,6 @@ namespace Rocket.CodeBuilder.App
 
                 txt_log.Text = result;
             }
-
-
         }
 
 
@@ -194,13 +191,13 @@ namespace Rocket.CodeBuilder.App
 
             string[] arr = new string[] { "information_schema", "mysql", "performance_schema", "test" };
             cmb_DataBaseList.DataSource = business.GetDatabase().Where(c => !arr.Contains(c)).ToArray();
-            cmb_DataBaseList.DataSource = new string[] { "Rocket" };
             cmb_DataBaseList.SelectedIndex = 0;
 
-            string[] tableList = business.GetDataTableNameList(cmb_DataBaseList.SelectedItem.ToString());
+            string[] tableArr = new string[] { "__EFMigrationsHistory" };
+            string[] tableList = business.GetDataTableNameList(cmb_DataBaseList.SelectedItem.ToString()).Where(c => !tableArr.Contains(c)).ToArray();
+
             Array.Sort(tableList);
             cmb_TableList.DataSource = tableList;
-            cmb_TableList.DataSource = new string[] { "Ad" };
         }
 
         /// <summary>
@@ -228,6 +225,11 @@ namespace Rocket.CodeBuilder.App
 
             txt_ControllerName.Text = string.Join("", tableNameArray);
             txt_ControllerName_TextChanged(sender, e);
+
+            dt = business.GetTable(cmb_TableList.SelectedValue.ToString());
+
+            dgv_Columns.DataSource = dt.ColumnList;
+            
         }
 
         /// <summary>
@@ -268,7 +270,8 @@ namespace Rocket.CodeBuilder.App
         /// </summary>
         private void cmb_DataBaseList_SelectedValueChanged(object sender, EventArgs e)
         {
-            string[] tableList = business.GetDataTableNameList(cmb_DataBaseList.SelectedItem.ToString());
+            string[] tableArr = new string[] { "__EFMigrationsHistory" };
+            string[] tableList = business.GetDataTableNameList(cmb_DataBaseList.SelectedItem.ToString()).Where(c => !tableArr.Contains(c)).ToArray();
             Array.Sort(tableList);
             cmb_TableList.DataSource = tableList;
             cmb_TableList_SelectedValueChanged(sender, e);

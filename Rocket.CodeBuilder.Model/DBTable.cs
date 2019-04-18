@@ -18,6 +18,21 @@ namespace Rocket.CodeBuilder.Model
             set => NameLower = value;
         }
 
+        /// <summary>
+        /// 获取主键类型
+        /// </summary>
+        public string GetKeyType()
+        {
+            foreach (DBColumn dBColumn in ColumnList)
+            {
+                if (dBColumn.IsKey)
+                {
+                    return dBColumn.GetType();
+                }
+            }
+            return "";
+        }
+
         public string ControllerName { get; set; }
 
         public string GetListUrl { get; set; }
@@ -32,7 +47,7 @@ namespace Rocket.CodeBuilder.Model
         {
             Language.AddRange(list);
 
-            foreach (var column in ColumnList)
+            foreach (DBColumn column in ColumnList)
             {
                 column.Language = Language;
             }

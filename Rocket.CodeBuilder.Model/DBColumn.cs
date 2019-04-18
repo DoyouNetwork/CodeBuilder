@@ -37,6 +37,8 @@ namespace Rocket.CodeBuilder
 
         public int DbLenght { get; set; }
 
+        public WriteType WriteType { get; set; }
+
         public List<DBDataType> Language { get; set; }
 
 
@@ -69,5 +71,13 @@ namespace Rocket.CodeBuilder
         }
     }
 
+    public enum WriteType
+    {
+        Default = 0,
+        Redio = 1,//枚举选择
+        Checkbox = 2,//布尔
+        Select = 3,//多项单圈
+        FileUpload = 4
+    }
 
 }
