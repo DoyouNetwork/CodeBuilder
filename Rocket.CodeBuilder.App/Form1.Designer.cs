@@ -303,7 +303,7 @@
             this.txt_DatabaseAddress.Name = "txt_DatabaseAddress";
             this.txt_DatabaseAddress.Size = new System.Drawing.Size(163, 21);
             this.txt_DatabaseAddress.TabIndex = 25;
-            this.txt_DatabaseAddress.Text = "yuanfen0536.com";
+            this.txt_DatabaseAddress.Text = ".";
             // 
             // label10
             // 
@@ -322,7 +322,7 @@
             this.txt_DatabaseUserName.Name = "txt_DatabaseUserName";
             this.txt_DatabaseUserName.Size = new System.Drawing.Size(107, 21);
             this.txt_DatabaseUserName.TabIndex = 27;
-            this.txt_DatabaseUserName.Text = "root";
+            this.txt_DatabaseUserName.Text = "sa";
             // 
             // label11
             // 
@@ -341,27 +341,27 @@
             this.txt_DatabasePassword.Name = "txt_DatabasePassword";
             this.txt_DatabasePassword.Size = new System.Drawing.Size(159, 21);
             this.txt_DatabasePassword.TabIndex = 29;
-            this.txt_DatabasePassword.Text = "Sql33136671";
+            this.txt_DatabasePassword.Text = "111111";
             // 
             // rbtn_DBType_MySql
             // 
             this.rbtn_DBType_MySql.AutoSize = true;
-            this.rbtn_DBType_MySql.Checked = true;
             this.rbtn_DBType_MySql.Location = new System.Drawing.Point(16, 40);
             this.rbtn_DBType_MySql.Name = "rbtn_DBType_MySql";
             this.rbtn_DBType_MySql.Size = new System.Drawing.Size(53, 16);
             this.rbtn_DBType_MySql.TabIndex = 31;
-            this.rbtn_DBType_MySql.TabStop = true;
             this.rbtn_DBType_MySql.Text = "Mysql";
             this.rbtn_DBType_MySql.UseVisualStyleBackColor = true;
             // 
             // rbtn_DBType_SqlServer
             // 
             this.rbtn_DBType_SqlServer.AutoSize = true;
+            this.rbtn_DBType_SqlServer.Checked = true;
             this.rbtn_DBType_SqlServer.Location = new System.Drawing.Point(75, 40);
             this.rbtn_DBType_SqlServer.Name = "rbtn_DBType_SqlServer";
             this.rbtn_DBType_SqlServer.Size = new System.Drawing.Size(77, 16);
             this.rbtn_DBType_SqlServer.TabIndex = 32;
+            this.rbtn_DBType_SqlServer.TabStop = true;
             this.rbtn_DBType_SqlServer.Text = "SQLServer";
             this.rbtn_DBType_SqlServer.UseVisualStyleBackColor = true;
             // 
