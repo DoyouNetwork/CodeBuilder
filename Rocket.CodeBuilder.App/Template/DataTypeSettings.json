@@ -2,11 +2,14 @@
   {
     "Language": 1,
     "DBType": {
-      "varchar": "String",
-      "longtext": "String",
+      "nvarchar":"string",
+      "varchar": "string",
+      "longtext": "string",
       "int": "int",
-      "decimal": "Decimal",
-      "datetime": "DateTime"
+      "decimal": "decimal",
+      "datetime": "DateTime",
+      "uniqueidentifier": "Guid",
+      "bit": "bool"
     }
   }
 ]

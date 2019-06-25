@@ -79,7 +79,7 @@ namespace Rocket.CodeBuilder.App
             List<string> templateFileList = new List<string>();
             string[] files = Directory.GetFiles(txt_TemplateFilePath.Text, "*.Template");
 
-            
+
             if (!string.IsNullOrEmpty(text_LanguageFilePath.Text))
             {
                 try
@@ -229,7 +229,16 @@ namespace Rocket.CodeBuilder.App
             dt = business.GetTable(cmb_TableList.SelectedValue.ToString());
 
             dgv_Columns.DataSource = dt.ColumnList;
-            
+
+            for (int i = 0; i < dgv_Columns.Rows.Count; i++)
+            {
+                DataGridViewComboBoxCell rowColumn = (DataGridViewComboBoxCell)dgv_Columns.Rows[i].Cells["WriteTypeBox"];
+                if (rowColumn != null)
+                {
+                    rowColumn.Value = WriteType.Default.ToString();
+                }
+            }
+
         }
 
         /// <summary>
@@ -242,6 +251,11 @@ namespace Rocket.CodeBuilder.App
             txt_FileOutPath.Text = GetConfigValue("FileOutPath");
 
             text_LanguageFilePath.Text = GetConfigValue("LanguageFilePath");
+
+            foreach (WriteType wt in Enum.GetValues(typeof(WriteType)))
+            {
+                WriteTypeBox.Items.Add(wt.ToString());
+            }
         }
 
         /// <summary>
@@ -315,6 +329,22 @@ namespace Rocket.CodeBuilder.App
                 filePath = openFileDialog.FileName;
                 text_LanguageFilePath.Text = filePath;
                 SaveConfigValue("LanguageFilePath", filePath);
+            }
+        }
+
+        private void Dgv_Columns_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        {
+            if (dgv_Columns.Columns[e.ColumnIndex].Name == "WriteTypeBox")
+            {
+                DBColumn column = dgv_Columns.Rows[e.RowIndex].DataBoundItem as DBColumn;
+                DataGridViewComboBoxCell comboxCell = (DataGridViewComboBoxCell)dgv_Columns.Rows[e.RowIndex].Cells["WriteTypeBox"];
+                foreach (WriteType wt in Enum.GetValues(typeof(WriteType)))
+                {
+                    if (wt.ToString() == comboxCell.Value.ToString())
+                    {
+                        column.WriteType = wt;
+                    }
+                }
             }
         }
     }

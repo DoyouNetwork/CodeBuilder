@@ -1,0 +1,30 @@
+using System;
+using System.ComponentModel.DataAnnotations;
+
+namespace Rocket.Model
+{
+    public class @(Model.Name)
+    {
+	    public @(Model.Name)()
+        {
+		@foreach(var d in Model.ColumnList){
+        if(d.IsKey&&@d.GetType()=="Guid"){
+            WriteLiteral("            "+d.Name+" = Guid.NewGuid();");WriteLiteral("\r\n");
+        }
+
+		if(d.Name=="CreateTime"&&@d.GetType()=="DateTime"){
+            WriteLiteral("            "+d.Name+" = DateTime.Now;");WriteLiteral("\r\n");
+        }
+}
+        }
+@foreach(var d in Model.ColumnList){
+        WriteLiteral("        /// <summary>");WriteLiteral("\r\n");
+        WriteLiteral("        /// "+@d.Node);WriteLiteral("\r\n");
+        WriteLiteral("        /// </summary>");WriteLiteral("\r\n");
+        if(d.IsKey){
+            WriteLiteral("        [Key]");WriteLiteral("\r\n");
+        }
+        WriteLiteral("        public  "+ @d.GetType() +" "+@d.Name+" { get; set; }");WriteLiteral("\r\n\r\n");
+}
+    }
+}

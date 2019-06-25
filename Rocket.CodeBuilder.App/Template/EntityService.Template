@@ -1,0 +1,204 @@
+using Microsoft.EntityFrameworkCore;
+using Rocket.Model;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
+
+namespace Rocket.Service
+{
+    
+    public class @(Model.Name)Service : I@(Model.Name)Service
+    {
+        #region Fields
+        private readonly Entities _entities;
+        #endregion
+
+        #region Ctor
+        public @(Model.Name)Service(Entities entities)
+        {
+            _entities = entities;
+        }
+        #endregion
+
+        #region Method
+        /// <summary>
+        /// 数据库查询对象
+        /// </summary>
+		public DbSet<@(Model.Name)> @(Model.Name) => _entities.@(Model.Name);
+
+
+         /// <summary>
+        /// 查询@(Model.Name)列表
+        /// </summary>
+        /// <param name="page">页码</param>
+        /// <param name="limit">查询数据条数</param>
+        public PageList<@(Model.Name)> GetDataList(int page = 1, int limit = int.MaxValue)
+        {
+            IQueryable<@(Model.Name)> query@(Model.Name) = _entities.@(Model.Name)
+			@foreach(var d in Model.ColumnList){
+    if(d.Name=="Sort"){
+WriteLiteral(".OrderByDescending(c => c.Sort)");
+break;
+    }
+
+	    if(d.Name=="CreateTime"){
+WriteLiteral(".OrderByDescending(c => c.CreateTime)");
+break;
+    }
+} ;
+
+            return new PageList<@(Model.Name)>(query@(Model.Name), page, limit);
+        }
+
+        /// <summary>
+        /// 查询@(Model.Name)列表
+        /// </summary>
+        /// <param name="func">Lambda条件过滤表达式</param>
+        /// <param name="page">页码</param>
+        /// <param name="limit">页数据大小</param>
+        public PageList<@(Model.Name)> GetDataList(Expression<Func<@(Model.Name), bool>> func, int page = 1, int limit = int.MaxValue)
+        {
+            IQueryable<@(Model.Name)> query@(Model.Name) = _entities.@(Model.Name)
+						@foreach(var d in Model.ColumnList){
+    if(d.Name=="Sort"){
+WriteLiteral(".OrderByDescending(c => c.Sort)");
+break;
+    }
+
+	    if(d.Name=="CreateTime"){
+WriteLiteral(".OrderByDescending(c => c.CreateTime)");
+break;
+    }
+} ;
+
+            if (func != null)
+            {
+                query@(Model.Name) = query@(Model.Name).Where(func);
+            }
+
+            return new PageList<@(Model.Name)>(query@(Model.Name), page, limit);
+        }
+
+		/// <summary>
+        /// 查询@(Model.Name)列表
+        /// </summary>
+        /// <param name="selector">Lambda字段过滤表达式</param>
+        /// <param name="page">页码</param>
+        /// <param name="limit">页数据大小</param>
+		public PageList<@(Model.Name)> GetDataList(Func<@(Model.Name), object> selector, int page = 1, int limit = int.MaxValue)
+        {
+            return new PageList<@(Model.Name)>(_entities.@(Model.Name),selector, page, limit);
+        }
+
+
+        /// <summary>
+        /// 查询@(Model.Name)列表
+        /// </summary>
+        /// <param name="func">Lambda条件过滤表达式</param>
+        /// <param name="selector">Lambda字段过滤表达式</param>
+        /// <param name="page">页码</param>
+        /// <param name="limit">页数据大小</param>
+        public PageList<@(Model.Name)> GetDataList(Expression<Func<@(Model.Name), bool>> func,Func<@(Model.Name), object> selector, int page = 1, int limit = int.MaxValue)
+        {
+            IQueryable<@(Model.Name)> query@(Model.Name) = _entities.@(Model.Name)
+						@foreach(var d in Model.ColumnList){
+    if(d.Name=="Sort"){
+WriteLiteral(".OrderByDescending(c => c.Sort)");
+break;
+    }
+
+	    if(d.Name=="CreateTime"){
+WriteLiteral(".OrderByDescending(c => c.CreateTime)");
+break;
+    }
+} ;
+
+            if (func != null)
+            {
+                query@(Model.Name) = query@(Model.Name).Where(func);
+            }
+
+            return new PageList<@(Model.Name)>(query@(Model.Name),selector, page, limit);
+        }
+
+        /// <summary>
+        /// 获取最新的实体对象
+        /// </summary>
+        /// <param name="id">数据Id</param>
+		public @(Model.Name) GetData(@(Model.GetKeyType()) id)
+        {
+            @(Model.Name) @((Model.Name).ToLower()) = _entities.@(Model.Name).FirstOrDefault(c => c.Id == id);
+
+            return @((Model.Name).ToLower());
+        }
+
+        /// <summary>
+        /// 添加@(Model.Name)
+        /// </summary>
+        /// <param name="@((Model.Name).ToLower())">@(Model.Name)实体</param>
+        /// <returns>返回影响数据条数,如果添加失败则返回0</returns>
+        public int AddData(@(Model.Name) @((Model.Name).ToLower()))
+        {
+            _entities.@(Model.Name).Add(@((Model.Name).ToLower()));
+            
+            return _entities.SaveChanges();
+        }
+
+        /// <summary>
+        /// 删除@(Model.Name)
+        /// </summary>
+        /// <param name="id">@(Model.Name)Id</param>
+        /// <returns>返回值大于1则表示删除成功</returns>
+        public int DeleteData(@(Model.GetKeyType()) id)
+        {
+            @(Model.Name) @((Model.Name).ToLower()) = _entities.@(Model.Name).FirstOrDefault(c => c.Id == id);
+
+            return DeleteData(@((Model.Name).ToLower()));
+        }
+
+        /// <summary>
+        /// 删除@(Model.Name)
+        /// </summary>
+        /// <param name="@((Model.Name).ToLower())">@(Model.Name)实体</param>
+        /// <returns>返回值大于1则表示删除成功</returns>
+        public int DeleteData(@(Model.Name) @((Model.Name).ToLower()))
+        {
+            if (@((Model.Name).ToLower()) != null)
+            {
+                _entities.@(Model.Name).Remove(@((Model.Name).ToLower()));
+            }
+
+            return _entities.SaveChanges();
+        }
+
+        /// <summary>
+        /// 更新@(Model.Name)对象
+        /// </summary>
+        /// <param name="@((Model.Name).ToLower())">@(Model.Name)实体</param>
+        /// <returns>返回结果大于1则表示更新成功</returns>
+        public int UpdateData(@(Model.Name) @((Model.Name).ToLower()))
+        {
+            if (@((Model.Name).ToLower()) == null)
+            {
+                return 0;
+            }
+
+            @(Model.Name) db@(Model.Name) = _entities.@(Model.Name).FirstOrDefault(c => c.Id == @((Model.Name).ToLower()).Id);
+            if (db@(Model.Name) == null)
+            {
+                return 0;
+            }
+
+@foreach(var d in Model.ColumnList){
+    if(d.IsKey){
+continue;
+    }
+WriteLiteral("\t\t\t\t\n db"+ @Model.Name +"."+ d.Name +" = "+ @Model.Name.ToLower() +"."+ @d.Name +";\r\n");
+}
+
+            return _entities.SaveChanges();
+        }
+        #endregion
+    }
+}

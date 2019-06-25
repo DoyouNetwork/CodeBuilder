@@ -14,6 +14,8 @@ namespace Rocket.CodeBuilder
             DbType = dataColumn.DataType.Name;
 
             Node = node;
+
+            InitializeWriteType();
         }
 
         public DBColumn(ColumnDesc columnDesc)
@@ -25,10 +27,23 @@ namespace Rocket.CodeBuilder
             DbType = columnDesc.Type;
 
             Node = columnDesc.Comment;
+
+            InitializeWriteType();
         }
 
 
         public string Name { get; set; }
+        /// <summary>
+        /// 小驼峰命名法
+        /// </summary>
+        public string NameCamel
+        {
+            get
+            {
+                return $"{Name[0].ToString().ToLower()}{ Name.Substring(1, Name.Length - 1)}";
+            }
+        }
+
         public bool IsKey { get; set; }
 
         public string Node { get; set; }
@@ -38,6 +53,29 @@ namespace Rocket.CodeBuilder
         public int DbLenght { get; set; }
 
         public WriteType WriteType { get; set; }
+        public void InitializeWriteType()
+        {
+            string columnType = GetType();
+            switch (columnType)
+            {
+                case "int":
+                case "decimal":
+                    WriteType = WriteType.Default;
+                    break;
+
+                case "DateTime":
+                    WriteType = WriteType.Default;
+                    break;
+
+                case "bool":
+                    WriteType = WriteType.Checkbox;
+                    break;
+
+                default:
+                    WriteType = WriteType.Default;
+                    break;
+            }
+        }
 
         public List<DBDataType> Language { get; set; }
 

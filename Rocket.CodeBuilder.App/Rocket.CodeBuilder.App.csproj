@@ -266,6 +266,11 @@
     <None Include="Template\Controller.Template" />
     <None Include="Template\DataTypeSettings.json" />
     <None Include="Template\Edit.Template" />
+    <None Include="Template\Entity.Template" />
+    <None Include="Template\EntityController.Template" />
+    <None Include="Template\EntityService.Template" />
+    <None Include="Template\IEntityService.Template" />
+    <None Include="Template\Index.Template" />
     <None Include="Template\List.Template" />
     <None Include="Template\Model.Template" />
   </ItemGroup>

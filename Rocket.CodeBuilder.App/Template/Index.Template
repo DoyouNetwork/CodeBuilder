@@ -4,97 +4,145 @@
 
 @@{
     ViewData["Title"] = "@(Model.Name)";
-    Layout = "~/Views/Shared/_AdminDataLayoutLayui.cshtml";
+    Layout = "~/Views/Shared/_DataLayout.cshtml";
 }
 
-<script type="text/html" id="toolbarData">
+<script type="text/html" id="@(Model.NameLower)ToolBar">
     <div class="layui-btn-container">
         <button class="layui-btn layui-btn-sm" lay-event="addData">添加</button>
     </div>
 </script>
-<script type="text/html" id="roleBar">
-    <a class="layui-btn layui-btn-xs" lay-event="updateDataPermission">编辑@(Model.Name)</a>
-    <a class="layui-btn layui-btn-xs" lay-event="deleteData">删除@(Model.Name)</a>
+<script type="text/html" id="@(Model.NameLower)Bar">
+    <a class="layui-btn layui-btn-xs" lay-event="updateData">编辑</a>
+    <a class="layui-btn layui-btn-xs" lay-event="deleteData">删除</a>
 </script>
-<table class="layui-hide" id="roleList" lay-filter="role"></table>
+<table class="layui-hide" id="@(Model.NameLower)List" lay-filter="@(Model.NameLower)"></table>
 
-@@section Script{
+
+@@section DomBox{
+    <div class="layui-form" id="addDataBox" lay-filter="addDataBox" style="margin-top:10px;">                  
+                    @foreach(var d in Model.ColumnList){
+        <div class="layui-form-item" style="@(d.IsKey?"display: none;":"")">
+            <label class="layui-form-label">@d.Node</label>
+            <div class="layui-input-inline">
+    @{
+   string writeType= d.WriteType.ToString();
+   if(writeType!="Default"){
+        switch (writeType) {
+            case "Checkbox":
+                <input type="checkbox" name="@d.Name" id='@d.Name' lay-skin="switch" lay-text="是|否" />
+            break;
+        }
+   }else{
+       string columnType=d.GetType();
+        switch (columnType) {
+            case "int":
+            case "decimal":
+                    <input type='number' name='@d.Name' id='@d.Name' value='0' placeholder='请输入@(d.Node)'  class='layui-input' />
+            break;
+
+	        case "DateTime":
+                dateTimeList.Add(d.NameCamel);
+                <input type='text' name='@d.Name' id='@d.Name' @{WriteLiteral("value='@(DateTime.Now.ToString(\"yyyy-MM-dd HH:mm:ss\"))'");} placeholder='HH:mm:ss'  class='layui-input' />
+	        break;
+
+            default:
+                <input type='text' name='@d.Name' id='@d.Name' placeholder='请输入@(d.Node)' autocomplete='off' class='layui-input' />
+            break;
+        }
+   }}            </div>
+        </div>
+WriteLiteral("\r\n\r\n");
+}
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button type="button" class="layui-btn layui-btn-primary layui-layer-close" style="position: inherit;">关闭</button>
+                <button class="layui-btn" lay-submit lay-filter="addDataSubmit">立即提交</button>
+            </div>
+        </div>
+    </div>
+}
+
+@@section ScriptBox{
+    <script src="/layuiadmin/layui/layui.js"></script>
     <script>
-        layui.use(['form', 'table'], function () {
+        layui.config({
+            base: '/layuiadmin/' //静态资源所在路径
+        }).extend({
+            index: 'lib/index' //主入口模块
+        }).use(['index','form', 'table'@if(dateTimeList.Count()>=1){WriteLiteral(",'laydate'");}], function () {
+            var $ = layui.jquery;
             var form = layui.form;
             var table = layui.table;
             var form = layui.form;
-            var addDataId;
+            @if(dateTimeList.Count()>=1){
+                WriteLiteral("var laydate = layui.laydate;\r\n");
+            }
 
+            var addDataId;
+            var bUrl="/@(Model.Name)/Add";
+			var @(Model.NameLower)TableLoadingIndex;
             table.render({
-                id: 'roleTable'
-                , elem: '#roleList'
-                , toolbar: '#toolbarData'
+                id: '@(Model.NameLower)Table'
+                , elem: '#@(Model.NameLower)List'
+                , toolbar: '#@(Model.NameLower)ToolBar'
+				, height: 'full-20'
                 , method: 'post'
-                , url: '/@(Model.Name)/GetDataList'
+				, page: true
+                , url: '/@(Model.Name)/GetList'
                 , cols: [[
 				@foreach(var d in Model.ColumnList){
-WriteLiteral("{ field:'"+@d.Name+"',title:'"+@d.Name+"名称' },\r\n");
-}
-                    { title: '操作', toolbar: '#roleBar' }
+                    string writeType= d.WriteType.ToString();
+                    if(writeType!="Default"){
+                         switch (writeType) {
+                             case "Checkbox":
+                                 WriteLiteral("{ field:'"+ @d.NameCamel +"',title:'"+@d.Node+"', templet: function (d) { if(d."+@d.NameCamel+"){ return  '是'; }else{ return  '否'; } } },\r\n");
+                             break;
+                         }
+                    }else{
+                        WriteLiteral("{ field:'"+ @d.NameCamel +"',title:'"+@d.Node+"' },\r\n");
+                    }}
+                    { title: '操作', toolbar: '#@(Model.NameLower)Bar' }
                 ]]
             });
 
             //以复选框事件为例
-            table.on('toolbar(role)', function (obj) {
+            table.on('toolbar(@(Model.NameLower))', function (obj) {
                 console.log(obj);
                 switch (obj.event) {
                     case 'addData':
-                        addDataId = layer.open({
-                            type: 1,
-                            content: $('#addDataBox')
-                        });
-                        break;
-                    default:
-                        layer.msg('未定义事件:' + obj.event);
+                    showDataBox(obj.data);
                         break;
                 };
             });
 
             //以复选框事件为例
-            table.on('tool(role)', function (obj) {
-                console.log(obj);
+            table.on('tool(@(Model.NameLower))', function (obj) {
                 switch (obj.event) {
-                    case 'updateDataPermission':
-                        layer.open({
-                            title: '编辑@(Model.Name)',
-                            type: 2,
-                            area: ['550px', '430px'],
-                            content: '/@(Model.Name)/DataPermission?DataId=' + obj.data.Id
-                        });
+                    case 'updateData':
+                        showDataBox(obj.data);
                         break;
 
                     case 'deleteData':
                         layer.confirm('确定要删除@(Model.Name)么?', { icon: 3, title: '提示' }, function (index) {
-                            console.log(obj.data.Id);
-                            //return;
                             layer.close(index);
 
                             var loadingDeleteData = layer.load(1, { shade: [0.8, '#666'] });
 
                             $.ajax({
                                 type: 'POST',
-                                url: '/@(Model.Name)/DeleteData',
-                                data: { Id: obj.data.Id },
+                                url: '/@(Model.Name)/Delete',
+                                data: { Id: obj.data.id },
                                 dataType: "json",
                                 success: function (d) {
                                     layer.close(loadingDeleteData);
                                     layer.msg(d.msg);
-                                    if (true) {
-                                        table.reload('roleTable', {});
+                                    if (d.code == 1) {
+                                        table.reload('@(Model.NameLower)Table', {});    
                                     }
                                 }
                             });
                         });
-                        break;
-
-                    default:
-                        layer.msg('未定义事件:' + obj.event);
                         break;
                 };
             });
@@ -104,61 +152,54 @@ WriteLiteral("{ field:'"+@d.Name+"',title:'"+@d.Name+"名称' },\r\n");
 
             //监听提交
             form.on('submit(addDataSubmit)', function (data) {
-                var loading = layer.load(1, { shade: [0.8, '#666'] })
+                @foreach(var d in Model.ColumnList){
+                   string writeType= d.WriteType.ToString();
+                    switch (writeType) {
+                		case "Checkbox":
+                            WriteLiteral("if (data.field."+d.Name+") { data.field."+d.Name+" = true; } else { data.field."+d.Name+" = false; }\r\n");
+                	    break;
+                    }
+                }
+                var loading = layer.load(1, { shade: [0.8, '#666'] });
                 $.ajax({
                     type: 'POST',
-                    url: '/@(Model.Name)/AddData',
-                    data: { name: data.field.roleName },
+                    url: bUrl,
+                    data:  data.field,
                     dataType: "json",
                     success: function (d) {
                         layer.close(loading);
                         layer.close(addDataId);
                         layer.msg(d.msg);
-
-                        if (d.msg == "添加成功") {
-                            table.reload('roleTable', {});
+                        if (d.code == 1) {
+                            table.reload('@(Model.NameLower)Table', {});    
                         }
                     }
                 });
 
                 return false;
             });
+
+            @foreach(string datetimeItem in dateTimeList){
+    WriteLiteral("laydate.render({ elem: '#"+@datetimeItem+"' ,type: 'datetime'});\r\n");
+            }
+
+            function showDataBox(data) {
+                addDataId = layer.open({
+                    type: 1,
+                    content: $('#addDataBox')
+                });
+                
+                if (data) {
+                    bUrl = "/@(Model.Name)/Update";
+                    form.val("addDataBox", {
+@foreach(var d in Model.ColumnList){
+WriteLiteral("'"+d.Name  +"':data."+d.NameCamel+",\r\n");
+}
+                    });
+                }else{
+                       bUrl = "/@(Model.Name)/Add";
+                }
+            }
         });
     </script>
-}
-
-
-@@section DomBox{
-    <div class="layui-form" id="addDataBox" style="margin-top:10px;">
-                    
-                    @foreach(var d in Model.ColumnList){
-                        if (d.IsKey) {
-                            continue;
-                        }
-<div class="layui-form-item">
-<label class="layui-form-label">@d.Name</label>
-<div class="layui-input-inline">
-
-@switch (d.GetType()) {
-    case "DateTime":
-<input type='text' name='EndTime' id='EndTime' placeholder='HH:mm:ss' class='layui-input'>        
-        break;
-
-    default:
-    <input type="text" name="@d.Name" placeholder="请输入@(d.Name)名" autocomplete="off" class="layui-input">
-        break;
-}
-WriteLiteral(d.GetType());
-</div>
-</div>
-WriteLiteral("\r\n\r\n");
-}
-        
-        <div class="layui-form-item">
-            <div class="layui-input-block">
-                <button type="reset" class="layui-btn layui-btn-primary">关闭</button>
-                <button class="layui-btn" lay-submit lay-filter="addDataSubmit">立即提交</button>
-            </div>
-        </div>
-    </div>
 }

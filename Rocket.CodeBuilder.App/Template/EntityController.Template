@@ -1,0 +1,47 @@
+﻿using Microsoft.AspNetCore.Mvc;
+using System;
+using Mine.Model;
+using Mine.Web.Framework;
+
+namespace Mine.Admin.Controllers
+{
+    public class @(Model.Name)Controller : Controller
+    {
+        IRepository<@Model.Name> db@(Model.Name);
+        public @(Model.Name)Controller(IRepository<@(Model.Name)> repository@(Model.Name))
+        {
+            db@(Model.Name) = repository@(Model.Name);
+        }
+
+        public IActionResult GetList(int page = 1, int limit = 10)
+        {
+            return new JsonList<@(Model.Name)>(db@(Model.Name).DbSet, page, limit);
+        }
+
+        public IActionResult Add(@(Model.Name) @(Model.NameCamel))
+        {
+            bool res = db@(Model.Name).Add(@(Model.NameCamel));
+            return new JsonData(res);
+        }
+
+        public IActionResult Delete(@(Model.GetKeyType()) id)
+        {
+            bool res = db@(Model.Name).Delete(c => c.Id == id) >= 1;
+            return new JsonData(res);
+        }
+
+        public IActionResult Update(@(Model.Name) @(Model.NameCamel))
+        {
+            bool res = db@(Model.Name).Update(@(Model.NameCamel), c => new
+            {
+                @foreach(var d in Model.ColumnList){
+                    if(d.IsKey){
+                        continue;
+                    }
+                    WriteLiteral("\t\t\t\tc."+ @d.Name +",\r\n");
+                }
+            });
+            return new JsonData(res);
+        }
+    }
+}

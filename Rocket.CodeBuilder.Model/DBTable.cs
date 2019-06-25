@@ -12,10 +12,21 @@ namespace Rocket.CodeBuilder.Model
         }
         public List<DBColumn> ColumnList { get; set; }
         public string Name { get; set; }
-        public string NameLower
+
+        /// <summary>
+        /// 全小写命名法
+        /// </summary>
+        public string NameLower => Name.ToLower();
+
+        /// <summary>
+        /// 小驼峰命名法
+        /// </summary>
+        public string NameCamel
         {
-            get => Name.ToLower();
-            set => NameLower = value;
+            get
+            {
+                return $"{Name[0].ToString().ToLower()}{ Name.Substring(1, Name.Length - 1)}";
+            }
         }
 
         /// <summary>

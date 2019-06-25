@@ -1,0 +1,80 @@
+﻿using Microsoft.EntityFrameworkCore;
+using Rocket.Model;
+using System;
+using System.Collections.Generic;
+using System.Linq.Expressions;
+
+namespace Rocket.Service
+{
+    public interface I@(Model.Name)Service
+    {
+	    /// <summary>
+        /// 数据库查询对象
+        /// </summary>
+	    DbSet<@(Model.Name)> @(Model.Name) { get; }
+
+
+
+		/// <summary>
+        /// 查询@(Model.Name)列表
+        /// </summary>
+        /// <param name="func">Lambda条件过滤表达式</param>
+        /// <param name="page">页码</param>
+        /// <param name="limit">页数据大小</param>
+        PageList<@(Model.Name)> GetDataList(Expression<Func<@(Model.Name), bool>> func, int page = 1, int limit = int.MaxValue);
+
+		/// <summary>
+        /// 查询@(Model.Name)列表
+        /// </summary>
+        /// <param name="selector">Lambda字段过滤表达式</param>
+        /// <param name="page">页码</param>
+        /// <param name="limit">页数据大小</param>
+		PageList<@(Model.Name)> GetDataList(Func<@(Model.Name), object> selector, int page = 1, int limit = int.MaxValue);
+
+        /// <summary>
+        /// 查询@(Model.Name)列表
+        /// </summary>
+        /// <param name="func">Lambda条件过滤表达式</param>
+        /// <param name="selector">Lambda字段过滤表达式</param>
+        /// <param name="page">页码</param>
+        /// <param name="limit">页数据大小</param>
+        PageList<@(Model.Name)> GetDataList(Expression<Func<@(Model.Name), bool>> func,Func<@(Model.Name), object> selector, int page = 1, int limit = int.MaxValue);
+        
+		/// <summary>
+        /// 查询@(Model.Name)列表
+        /// </summary>
+        /// <param name="page">页码</param>
+        /// <param name="limit">查询数据条数</param>
+        PageList<@(Model.Name)> GetDataList(int page = 1, int limit = int.MaxValue);
+     
+	    /// <summary>
+        /// 获取最新的实体对象
+        /// </summary>
+        /// <param name="id">数据Id</param>
+	    @(Model.Name) GetData(@(Model.GetKeyType()) id);
+
+		/// <summary>
+        /// 添加数据,通过一个实体
+        /// </summary>
+        /// <param name="manager">要添加的实体对象</param>
+        int AddData(@(Model.Name) @((Model.Name).ToLower()));
+
+		/// <summary>
+        /// 通过Id删除对象
+        /// </summary>
+        /// <param name="id">要删除对象的Id</param>
+        int DeleteData(@(Model.GetKeyType()) id);
+
+		/// <summary>
+        /// 通过实体删除对象
+        /// </summary>
+        /// <param name="manager">要删除对象的实体</param>
+        int DeleteData(@(Model.Name) @((Model.Name).ToLower()));
+
+		/// <summary>
+        /// 更新实体对象
+        /// </summary>
+        /// <param name="manager">要更新的实体对象</param>
+        int UpdateData(@(Model.Name) @((Model.Name).ToLower()));
+    }
+}
