@@ -32,6 +32,12 @@
             case "Checkbox":
                 <input type="checkbox" name="@d.Name" id='@d.Name' lay-skin="switch" lay-text="是|否" />
             break;
+
+            case "FileUpload":
+                <input type='hidden' name='@(d.Name)' id='@(d.Name)' >
+                <img class="layui-upload-img" id="@(d.Name)UploadImg" style="width:200px; margin:9px; border:1px solid;" src="/images/Add.png">
+                <p id="@(d.Name)UploadText"></p>
+            break;
         }
    }else{
        string columnType=d.GetType();
@@ -94,11 +100,14 @@ WriteLiteral("\r\n\r\n");
 				@foreach(var d in Model.ColumnList){
                     string writeType= d.WriteType.ToString();
                     if(writeType!="Default"){
-                         switch (writeType) {
-                             case "Checkbox":
-                                 WriteLiteral("{ field:'"+ @d.NameCamel +"',title:'"+@d.Node+"', templet: function (d) { if(d."+@d.NameCamel+"){ return  '是'; }else{ return  '否'; } } },\r\n");
-                             break;
-                         }
+                        switch (writeType) {
+                            case "Checkbox":
+                                WriteLiteral("{ field:'"+ @d.NameCamel +"',title:'"+@d.Node+"', templet: function (d) { if(d."+@d.NameCamel+"){ return  '是'; }else{ return  '否'; } } },\r\n");
+                            break;
+                            case "FileUpload":
+                                WriteLiteral("{ field:'"+ @d.NameCamel +"',title:'"+@d.Node+"', templet: function (d) { return '<img src=\"'+d."+ @d.NameCamel +"+'\" />'; } },\r\n");
+                            break;
+                        }
                     }else{
                         WriteLiteral("{ field:'"+ @d.NameCamel +"',title:'"+@d.Node+"' },\r\n");
                     }}
@@ -193,13 +202,66 @@ WriteLiteral("\r\n\r\n");
                     bUrl = "/@(Model.Name)/Update";
                     form.val("addDataBox", {
 @foreach(var d in Model.ColumnList){
-WriteLiteral("'"+d.Name  +"':data."+d.NameCamel+",\r\n");
+WriteLiteral("'"+ d.Name +"':data."+d.NameCamel+",\r\n");
 }
                     });
+
+                @foreach(var d in Model.ColumnList){
+                    string writeType = d.WriteType.ToString();
+                    if(writeType!="Default"){
+                         switch (writeType) {
+                             case "FileUpload":
+                                 WriteLiteral("$('#@(d.Name)UploadImg').attr('src', data.@d.NameCamel);");
+                             break;
+                         }
+                    }
+                }
+
+
+                      
                 }else{
                        bUrl = "/@(Model.Name)/Add";
                 }
             }
+
+                @foreach(var d in Model.ColumnList){
+                    string writeType = d.WriteType.ToString();
+                    if(writeType!="Default"){
+                         switch (writeType) {
+                             case "FileUpload":
+                                var @(d.NameCamel)UploadImg = upload.render({
+                                    elem: '#@(d.Name)UploadImg'
+                                    , url: '/Home/Upload?type=image'
+                                    , before: function (obj) {
+                                        //预读本地文件示例，不支持ie8
+                                        obj.preview(function (index, file, result) {
+                                            $('#@(d.Name)UploadImg').attr('src', result); //图片链接（base64）
+                                        });
+                                    }
+                                    , done: function (res) {
+                                        //如果上传失败
+                                        if (res.code != 1) {
+                                            return layer.msg('上传失败');
+                                        }
+                                        //上传成功
+                                        $('#@(d.Name)UploadImg').attr('src', res.data.relativePath);
+                                        $('#@(d.Name)').val(res.data.relativePath);
+                                    }
+                                    , error: function () {
+                                        //演示失败状态，并实现重传
+                                        var demoText = $('#SrcUploadText');
+                                        demoText.html('<span style=\'color: #FF5722;\'>上传失败</span> <a class=\'layui-btn layui-btn-xs @(d.NameCamel)UploadImg-reload\'>重试</a>');
+                                        demoText.find('.@(d.NameCamel)UploadImg-reload').on('click', function () {
+                                            @(d.NameCamel)UploadImg.upload();
+                                        });
+                                    }
+                                });
+                             break;
+                         }
+                    }
+                }
+            
+
         });
     </script>
 }

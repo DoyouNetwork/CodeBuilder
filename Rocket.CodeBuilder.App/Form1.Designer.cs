@@ -75,7 +75,7 @@
             // btn_CodeBuilder
             // 
             this.btn_CodeBuilder.Location = new System.Drawing.Point(720, 248);
-            this.btn_CodeBuilder.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btn_CodeBuilder.Margin = new System.Windows.Forms.Padding(4);
             this.btn_CodeBuilder.Name = "btn_CodeBuilder";
             this.btn_CodeBuilder.Size = new System.Drawing.Size(208, 82);
             this.btn_CodeBuilder.TabIndex = 0;
@@ -86,7 +86,7 @@
             // txt_log
             // 
             this.txt_log.Location = new System.Drawing.Point(18, 352);
-            this.txt_log.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txt_log.Margin = new System.Windows.Forms.Padding(4);
             this.txt_log.Multiline = true;
             this.txt_log.Name = "txt_log";
             this.txt_log.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
@@ -145,7 +145,7 @@
             // btn_SelectFileTemplate
             // 
             this.btn_SelectFileTemplate.Location = new System.Drawing.Point(368, 154);
-            this.btn_SelectFileTemplate.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btn_SelectFileTemplate.Margin = new System.Windows.Forms.Padding(4);
             this.btn_SelectFileTemplate.Name = "btn_SelectFileTemplate";
             this.btn_SelectFileTemplate.Size = new System.Drawing.Size(178, 34);
             this.btn_SelectFileTemplate.TabIndex = 9;
@@ -172,7 +172,7 @@
             // btn_ConnectionDB
             // 
             this.btn_ConnectionDB.Location = new System.Drawing.Point(21, 112);
-            this.btn_ConnectionDB.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btn_ConnectionDB.Margin = new System.Windows.Forms.Padding(4);
             this.btn_ConnectionDB.Name = "btn_ConnectionDB";
             this.btn_ConnectionDB.Size = new System.Drawing.Size(112, 34);
             this.btn_ConnectionDB.TabIndex = 12;
@@ -256,7 +256,7 @@
             // btn_FileSavePath
             // 
             this.btn_FileSavePath.Location = new System.Drawing.Point(368, 198);
-            this.btn_FileSavePath.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btn_FileSavePath.Margin = new System.Windows.Forms.Padding(4);
             this.btn_FileSavePath.Name = "btn_FileSavePath";
             this.btn_FileSavePath.Size = new System.Drawing.Size(178, 34);
             this.btn_FileSavePath.TabIndex = 20;
@@ -328,7 +328,7 @@
             // 
             this.rbtn_DBType_MySql.AutoSize = true;
             this.rbtn_DBType_MySql.Location = new System.Drawing.Point(24, 60);
-            this.rbtn_DBType_MySql.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.rbtn_DBType_MySql.Margin = new System.Windows.Forms.Padding(4);
             this.rbtn_DBType_MySql.Name = "rbtn_DBType_MySql";
             this.rbtn_DBType_MySql.Size = new System.Drawing.Size(78, 22);
             this.rbtn_DBType_MySql.TabIndex = 31;
@@ -340,7 +340,7 @@
             this.rbtn_DBType_SqlServer.AutoSize = true;
             this.rbtn_DBType_SqlServer.Checked = true;
             this.rbtn_DBType_SqlServer.Location = new System.Drawing.Point(112, 60);
-            this.rbtn_DBType_SqlServer.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.rbtn_DBType_SqlServer.Margin = new System.Windows.Forms.Padding(4);
             this.rbtn_DBType_SqlServer.Name = "rbtn_DBType_SqlServer";
             this.rbtn_DBType_SqlServer.Size = new System.Drawing.Size(114, 22);
             this.rbtn_DBType_SqlServer.TabIndex = 32;
@@ -351,7 +351,7 @@
             // btn_Test
             // 
             this.btn_Test.Location = new System.Drawing.Point(810, 156);
-            this.btn_Test.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btn_Test.Margin = new System.Windows.Forms.Padding(4);
             this.btn_Test.Name = "btn_Test";
             this.btn_Test.Size = new System.Drawing.Size(118, 82);
             this.btn_Test.TabIndex = 33;
@@ -362,7 +362,7 @@
             // btn_SelectLanguageFile
             // 
             this.btn_SelectLanguageFile.Location = new System.Drawing.Point(555, 154);
-            this.btn_SelectLanguageFile.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btn_SelectLanguageFile.Margin = new System.Windows.Forms.Padding(4);
             this.btn_SelectLanguageFile.Name = "btn_SelectLanguageFile";
             this.btn_SelectLanguageFile.Size = new System.Drawing.Size(246, 34);
             this.btn_SelectLanguageFile.TabIndex = 34;
@@ -380,7 +380,7 @@
             // btn_WriteSettings
             // 
             this.btn_WriteSettings.Location = new System.Drawing.Point(764, 112);
-            this.btn_WriteSettings.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btn_WriteSettings.Margin = new System.Windows.Forms.Padding(4);
             this.btn_WriteSettings.Name = "btn_WriteSettings";
             this.btn_WriteSettings.Size = new System.Drawing.Size(160, 34);
             this.btn_WriteSettings.TabIndex = 36;
@@ -396,11 +396,11 @@
             this.DbType,
             this.WriteTypeBox});
             this.dgv_Columns.Location = new System.Drawing.Point(938, 16);
-            this.dgv_Columns.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.dgv_Columns.Margin = new System.Windows.Forms.Padding(4);
             this.dgv_Columns.Name = "dgv_Columns";
             this.dgv_Columns.RowHeadersWidth = 62;
             this.dgv_Columns.RowTemplate.Height = 23;
-            this.dgv_Columns.Size = new System.Drawing.Size(816, 810);
+            this.dgv_Columns.Size = new System.Drawing.Size(1108, 810);
             this.dgv_Columns.TabIndex = 37;
             this.dgv_Columns.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.Dgv_Columns_CellValueChanged);
             // 
@@ -441,7 +441,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 18F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1772, 842);
+            this.ClientSize = new System.Drawing.Size(2059, 841);
             this.Controls.Add(this.dgv_Columns);
             this.Controls.Add(this.btn_WriteSettings);
             this.Controls.Add(this.text_LanguageFilePath);
@@ -479,7 +479,7 @@
             this.Controls.Add(this.txt_log);
             this.Controls.Add(this.btn_CodeBuilder);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "Form1";
             this.Text = "火箭代码生成器";
             this.Load += new System.EventHandler(this.Form1_Load);
