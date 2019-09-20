@@ -13,6 +13,11 @@ namespace Mine.Admin.Controllers
             db@(Model.Name) = repository@(Model.Name);
         }
 
+        public IActionResult Index()
+        {
+            return View();
+        }
+
         public IActionResult GetList(int page = 1, int limit = 10)
         {
             return new JsonList<@(Model.Name)>(db@(Model.Name).DbSet, page, limit);

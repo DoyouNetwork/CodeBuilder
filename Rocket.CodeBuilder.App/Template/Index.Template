@@ -20,7 +20,9 @@
 
 
 @@section DomBox{
-    <div class="layui-form" id="addDataBox" lay-filter="addDataBox" style="margin-top:10px;">                  
+    <div class="layui-form" id="addDataBox" lay-filter="addDataBox" style="margin-top:10px;">    
+          <div class="layui-row">
+            <div class="layui-col-xs6">              
                     @foreach(var d in Model.ColumnList){
         <div class="layui-form-item" style="@(d.IsKey?"display: none;":"")">
             <label class="layui-form-label">@d.Node</label>
@@ -60,6 +62,8 @@
         </div>
 WriteLiteral("\r\n\r\n");
 }
+        </div>
+    </div>
         <div class="layui-form-item">
             <div class="layui-input-block">
                 <button type="button" class="layui-btn layui-btn-primary layui-layer-close" style="position: inherit;">关闭</button>
@@ -76,11 +80,12 @@ WriteLiteral("\r\n\r\n");
             base: '/layuiadmin/' //静态资源所在路径
         }).extend({
             index: 'lib/index' //主入口模块
-        }).use(['index','form', 'table'@if(dateTimeList.Count()>=1){WriteLiteral(",'laydate'");}], function () {
+        }).use(['index','form','upload', 'table'@if(dateTimeList.Count()>=1){WriteLiteral(",'laydate'");}], function () {
             var $ = layui.jquery;
             var form = layui.form;
             var table = layui.table;
             var form = layui.form;
+            var upload = layui.upload;
             @if(dateTimeList.Count()>=1){
                 WriteLiteral("var laydate = layui.laydate;\r\n");
             }
@@ -195,6 +200,7 @@ WriteLiteral("\r\n\r\n");
             function showDataBox(data) {
                 addDataId = layer.open({
                     type: 1,
+                      area: ["650px"],
                     content: $('#addDataBox')
                 });
                 
@@ -211,7 +217,7 @@ WriteLiteral("'"+ d.Name +"':data."+d.NameCamel+",\r\n");
                     if(writeType!="Default"){
                          switch (writeType) {
                              case "FileUpload":
-                                 WriteLiteral("$('#@(d.Name)UploadImg').attr('src', data.@d.NameCamel);");
+                                 WriteLiteral("$('#"+@d.Name+"UploadImg').attr('src', data."+@d.NameCamel+");");
                              break;
                          }
                     }
@@ -229,33 +235,35 @@ WriteLiteral("'"+ d.Name +"':data."+d.NameCamel+",\r\n");
                     if(writeType!="Default"){
                          switch (writeType) {
                              case "FileUpload":
-                                var @(d.NameCamel)UploadImg = upload.render({
-                                    elem: '#@(d.Name)UploadImg'
-                                    , url: '/Home/Upload?type=image'
-                                    , before: function (obj) {
-                                        //预读本地文件示例，不支持ie8
-                                        obj.preview(function (index, file, result) {
-                                            $('#@(d.Name)UploadImg').attr('src', result); //图片链接（base64）
-                                        });
-                                    }
-                                    , done: function (res) {
-                                        //如果上传失败
-                                        if (res.code != 1) {
-                                            return layer.msg('上传失败');
-                                        }
-                                        //上传成功
-                                        $('#@(d.Name)UploadImg').attr('src', res.data.relativePath);
-                                        $('#@(d.Name)').val(res.data.relativePath);
-                                    }
-                                    , error: function () {
-                                        //演示失败状态，并实现重传
-                                        var demoText = $('#SrcUploadText');
-                                        demoText.html('<span style=\'color: #FF5722;\'>上传失败</span> <a class=\'layui-btn layui-btn-xs @(d.NameCamel)UploadImg-reload\'>重试</a>');
-                                        demoText.find('.@(d.NameCamel)UploadImg-reload').on('click', function () {
-                                            @(d.NameCamel)UploadImg.upload();
-                                        });
-                                    }
-                                });
+                             <Text>
+        var @(d.NameCamel)UploadImg = upload.render({
+            elem: '#@(d.Name)UploadImg'
+            , url: '/Home/Upload?type=image'
+            , before: function (obj) {
+                //预读本地文件示例，不支持ie8
+                obj.preview(function (index, file, result) {
+                    $('#@(d.Name)UploadImg').attr('src', result); //图片链接（base64）
+                });
+            }
+            , done: function (res) {
+                //如果上传失败
+                if (res.code != 1) {
+                    return layer.msg('上传失败');
+                }
+                //上传成功
+                $("#@(d.Name)UploadImg").attr("src", res.data.relativePath);
+                $("#@(d.Name)").val(res.data.relativePath);
+            }
+            , error: function () {
+                //演示失败状态，并实现重传
+                var demoText = $('#SrcUploadText');
+                demoText.html('<span style="color: #FF5722;">上传失败</span> <a class="layui-btn layui-btn-xs @(d.NameCamel)UploadImg-reload">重试</a>');
+                demoText.find('.@(d.NameCamel)UploadImg-reload').on('click', function () {
+                    @(d.NameCamel)UploadImg.upload();
+                });
+            }
+        });
+        </Text>
                              break;
                          }
                     }

@@ -1,0 +1,17 @@
+class @(Model.Name) {
+    @foreach(var d in Model.ColumnList){
+        WriteLiteral("//"+@d.Node);WriteLiteral("\r\n");
+        WriteLiteral(d.GetType() +" "+@d.NameCamel+";");WriteLiteral("\r\n\r\n");
+    }
+
+  @(Model.Name) .fromJson(Map json) :
+    @foreach(var d in Model.ColumnList){
+if(d.GetType() == "int"){
+WriteLiteral("            "+d.NameCamel+" = int.parse(json['"+d.NameCamel+"'].toString()),");WriteLiteral("\r\n");
+}else if(@d.GetType() == "DateTime"){
+WriteLiteral("            "+d.NameCamel+" = DateTime.parse(json['"+d.NameCamel+"']),");WriteLiteral("\r\n");
+         }else{
+WriteLiteral("            "+d.NameCamel+" = json['"+d.NameCamel+"'],");WriteLiteral("\r\n");
+         }
+    };
+}

@@ -9,7 +9,8 @@
       "decimal": "decimal",
       "datetime": "DateTime",
       "uniqueidentifier": "Guid",
-      "bit": "bool"
+      "bit": "bool",
+      "smallint":"int"
     }
   }
 ]
