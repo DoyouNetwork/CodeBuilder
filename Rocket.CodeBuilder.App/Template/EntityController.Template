@@ -1,16 +1,19 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System;
-using Mine.Model;
-using Mine.Web.Framework;
+using Steer.Model;
+using Steer.Service;
+using Steer.Web.Framework;
 
-namespace Mine.Admin.Controllers
+namespace Steer.WebAdmin.Controllers
 {
     public class @(Model.Name)Controller : Controller
     {
-        IRepository<@Model.Name> db@(Model.Name);
-        public @(Model.Name)Controller(IRepository<@(Model.Name)> repository@(Model.Name))
+        SteerContext _context;
+        @(Model.Name)Service _@(Model.NameCamel)Service;
+        public @(Model.Name)Controller(SteerContext context,@(Model.Name)Service @(Model.NameCamel)Service)
         {
-            db@(Model.Name) = repository@(Model.Name);
+            _context = context;
+            _@(Model.NameCamel)Service = @(Model.NameCamel)Service;
         }
 
         public IActionResult Index()
@@ -20,24 +23,24 @@ namespace Mine.Admin.Controllers
 
         public IActionResult GetList(int page = 1, int limit = 10)
         {
-            return new JsonList<@(Model.Name)>(db@(Model.Name).DbSet, page, limit);
+            return new JsonList<@(Model.Name)>(_@(Model.NameCamel)Service.DbSet, page, limit);
         }
 
         public IActionResult Add(@(Model.Name) @(Model.NameCamel))
         {
-            bool res = db@(Model.Name).Add(@(Model.NameCamel));
+            bool res = _@(Model.NameCamel)Service.Add(@(Model.NameCamel));
             return new JsonData(res);
         }
 
         public IActionResult Delete(@(Model.GetKeyType()) id)
         {
-            bool res = db@(Model.Name).Delete(c => c.Id == id) >= 1;
+            bool res = _@(Model.NameCamel)Service.Delete(c => c.Id == id) >= 1;
             return new JsonData(res);
         }
 
         public IActionResult Update(@(Model.Name) @(Model.NameCamel))
         {
-            bool res = db@(Model.Name).Update(@(Model.NameCamel), c => new
+            bool res = _@(Model.NameCamel)Service.Update(@(Model.NameCamel), c => new
             {
                 @foreach(var d in Model.ColumnList){
                     if(d.IsKey){

@@ -114,7 +114,11 @@ WriteLiteral("\r\n\r\n");
                             break;
                         }
                     }else{
-                        WriteLiteral("{ field:'"+ @d.NameCamel +"',title:'"+@d.Node+"' },\r\n");
+                        if(d.IsKey){
+                            WriteLiteral("{ field:'"+ @d.NameCamel +"',title:'"+@d.Node+"' , hide: true },\r\n");
+                        }else{
+                            WriteLiteral("{ field:'"+ @d.NameCamel +"',title:'"+@d.Node+"' },\r\n");
+                        }
                     }}
                     { title: '操作', toolbar: '#@(Model.NameLower)Bar' }
                 ]]
@@ -154,6 +158,9 @@ WriteLiteral("\r\n\r\n");
                                     if (d.code == 1) {
                                         table.reload('@(Model.NameLower)Table', {});    
                                     }
+                                },
+                                compented: function (XMLHttpRequest, textStatus) {
+                                    layer.close(loadingDeleteData);
                                 }
                             });
                         });
@@ -187,6 +194,9 @@ WriteLiteral("\r\n\r\n");
                         if (d.code == 1) {
                             table.reload('@(Model.NameLower)Table', {});    
                         }
+                    },
+                    compented: function (XMLHttpRequest, textStatus) {
+                        layer.close(loading);
                     }
                 });
 
